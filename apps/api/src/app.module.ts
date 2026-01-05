@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { DatabaseModule } from './common/database/database.module';
 import { RedisModule } from './common/redis/redis.module';
+import { DataModule } from './modules/data/data.module';
+import { DetectionModule } from './modules/detection/detection.module';
 
 @Module({
   imports: [
@@ -17,7 +19,11 @@ import { RedisModule } from './common/redis/redis.module';
     DatabaseModule,
     // Redis模块
     RedisModule,
-    // 业务模块将在后续任务中添加
+    // 数据采集模块
+    DataModule,
+    // 异常检测模块
+    DetectionModule,
+    // 其他业务模块将在后续任务中添加
   ],
   controllers: [],
   providers: [],
