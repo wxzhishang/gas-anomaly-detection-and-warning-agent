@@ -35,6 +35,7 @@ yarn-error.log*
 # IDE
 .vscode
 .idea
+.kiro
 *.swp
 *.swo
 *~
