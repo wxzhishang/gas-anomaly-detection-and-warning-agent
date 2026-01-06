@@ -5,6 +5,8 @@ import { DatabaseModule } from './common/database/database.module';
 import { RedisModule } from './common/redis/redis.module';
 import { DataModule } from './modules/data/data.module';
 import { DetectionModule } from './modules/detection/detection.module';
+import { AlertModule } from './modules/alert/alert.module';
+import { AgentModule } from './agent/agent.module';
 
 @Module({
   imports: [
@@ -23,6 +25,10 @@ import { DetectionModule } from './modules/detection/detection.module';
     DataModule,
     // 异常检测模块
     DetectionModule,
+    // 预警模块
+    AlertModule,
+    // Agent工作流模块
+    AgentModule,
     // 其他业务模块将在后续任务中添加
   ],
   controllers: [],

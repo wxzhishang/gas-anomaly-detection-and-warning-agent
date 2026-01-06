@@ -2,7 +2,6 @@ import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { createDatabasePool } from '../../common/database/database.config';
 import { createRedisClient } from '../../common/redis/redis.config';
 import { Pool } from 'pg';
-import { RedisClientType } from 'redis';
 import { DetectionService } from './detection.service';
 import { DataService } from '../data/data.service';
 import { SensorDataDto } from '../../common/types/sensor-data.types';
@@ -11,7 +10,7 @@ describe('DetectionService', () => {
   let detectionService: DetectionService;
   let dataService: DataService;
   let pool: Pool;
-  let redis: RedisClientType;
+  let redis: Awaited<ReturnType<typeof createRedisClient>>;
 
   beforeAll(async () => {
     pool = createDatabasePool();
@@ -261,7 +260,7 @@ describe('DetectionService', () => {
       }
 
       // This should process all devices without throwing errors
-      await expect(detectionService.detectAllDevices()).resolves.not.toThrow();
+      await expect(detectionService.detectAllDevices()).resolves.toBeUndefined();
     });
   });
 
@@ -281,7 +280,7 @@ describe('DetectionService', () => {
       }
 
       // This should process all devices without throwing errors
-      await expect(detectionService.updateAllBaselines()).resolves.not.toThrow();
+      await expect(detectionService.updateAllBaselines()).resolves.toBeUndefined();
       
       // Verify baseline is cached
       const cacheKey = `baseline:${deviceId}`;

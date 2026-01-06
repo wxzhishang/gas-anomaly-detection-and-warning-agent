@@ -1,6 +1,5 @@
 import { Injectable, Inject, Logger } from '@nestjs/common';
 import { Pool } from 'pg';
-import { RedisClientType } from 'redis';
 import { DATABASE_POOL } from '../../common/database/database.module';
 import { REDIS_CLIENT } from '../../common/redis/redis.module';
 import {
@@ -27,7 +26,7 @@ export class DetectionService {
     @Inject(DATABASE_POOL)
     private readonly pool: Pool,
     @Inject(REDIS_CLIENT)
-    private readonly redis: RedisClientType,
+    private readonly redis: any, // 使用any避免类型导入问题
   ) {}
 
   /**
