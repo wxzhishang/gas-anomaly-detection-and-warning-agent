@@ -1,0 +1,50 @@
+# Dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+bun.lockb
+
+# Testing
+coverage
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# Build outputs
+dist
+build
+.next
+out
+
+# Development files
+.git
+.gitignore
+.env
+.env.local
+.env*.local
+
+# Documentation
+*.md
+docs
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Turbo
+.turbo
+
+# Logs
+*.log
+logs
+
+# Misc
+.prettierrc
+.eslintrc.json

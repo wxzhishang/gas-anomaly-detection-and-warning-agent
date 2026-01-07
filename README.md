@@ -14,6 +14,8 @@
 ### 前置要求
 
 - Bun >= 1.0.0
+- Node.js >= 20.0.0
+- Yarn >= 1.22.0
 - Docker & Docker Compose
 
 ### 安装Bun
@@ -29,6 +31,31 @@ curl -fsSL https://bun.sh/install | bash
 bun --version
 ```
 
+### 开发环境快速启动
+
+使用提供的启动脚本一键启动所有服务：
+
+```bash
+# 一键启动开发环境
+./scripts/start-dev.sh
+```
+
+该脚本会自动：
+1. 检查并创建.env配置文件
+2. 启动Docker服务（TimescaleDB + Redis）
+3. 等待数据库就绪
+4. 安装依赖
+5. 启动API和Web服务
+
+访问：
+- 前端: http://localhost:3001
+- 后端API: http://localhost:3000
+- 健康检查: http://localhost:3000/health
+
+### 手动启动步骤
+
+如果需要手动启动，按以下步骤操作：
+
 ### 1. 克隆项目
 
 ```bash
@@ -36,40 +63,150 @@ git clone <repository-url>
 cd gas-regulator-mvp
 ```
 
-### 2. 安装依赖
+### 2. 配置环境变量
 
 ```bash
-bun install
+# 复制环境变量模板
+cp .env.example .env
+
+# 编辑.env文件，配置必要的参数
+# 特别注意：LLM_API_KEY是必需的
 ```
 
 ### 3. 启动数据库服务
 
 ```bash
+# 启动TimescaleDB和Redis
 docker-compose up -d
+
+# 等待服务就绪（约10-20秒）
+docker-compose ps
+
+# 验证数据库连接
+docker-compose exec timescaledb pg_isready -U postgres
 ```
 
-等待数据库初始化完成（约10-20秒）。
-
-### 4. 配置环境变量
+### 4. 安装依赖
 
 ```bash
-# 后端配置
-cp apps/api/.env.example apps/api/.env
-# 编辑 apps/api/.env，填入你的OpenAI API Key
-
-# 前端配置
-cp apps/web/.env.example apps/web/.env
+# 安装所有依赖
+bun install
 ```
 
 ### 5. 启动开发服务器
 
 ```bash
-# 启动所有服务
+# 在第一个终端启动API服务
+cd apps/api
 bun run dev
 
-# 或分别启动
-cd apps/api && bun run dev  # 后端: http://localhost:3001
-cd apps/web && bun run dev  # 前端: http://localhost:3000
+# 在第二个终端启动Web服务
+cd apps/web
+yarn dev
+```
+
+### 6. 测试数据生成
+
+```bash
+# 在第三个终端运行数据生成器
+bun run scripts/data-generator.ts
+```
+
+## 生产环境部署
+
+### 使用Docker Compose部署
+
+生产环境使用Docker Compose一键部署所有服务：
+
+```bash
+# 1. 配置生产环境变量
+cp .env.example .env
+# 编辑.env，设置生产环境配置
+
+# 2. 启动生产环境
+./scripts/start-prod.sh
+```
+
+该脚本会：
+1. 检查环境变量配置
+2. 构建Docker镜像
+3. 启动所有服务
+4. 执行健康检查
+5. 显示服务状态
+
+### 手动Docker部署
+
+```bash
+# 1. 构建并启动所有服务
+docker-compose -f docker-compose.prod.yml up -d --build
+
+# 2. 查看服务状态
+docker-compose -f docker-compose.prod.yml ps
+
+# 3. 查看日志
+docker-compose -f docker-compose.prod.yml logs -f
+
+# 4. 停止服务
+docker-compose -f docker-compose.prod.yml down
+```
+
+### 环境变量配置
+
+生产环境必需的环境变量：
+
+```env
+# 数据库配置
+POSTGRES_DB=gas_regulator
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=your_secure_password_here
+POSTGRES_PORT=5432
+
+# Redis配置
+REDIS_HOST=redis
+REDIS_PORT=6379
+
+# LLM配置（必需）
+LLM_API_KEY=your_llm_api_key_here
+LLM_BASE_URL=https://api.openai.com/v1
+LLM_MODEL=gpt-4
+
+# API配置
+API_PORT=3000
+NODE_ENV=production
+
+# Web配置
+WEB_PORT=3001
+NEXT_PUBLIC_API_URL=http://your-domain.com:3000
+NEXT_PUBLIC_WS_URL=ws://your-domain.com:3000
+```
+
+### 服务健康检查
+
+所有服务都配置了健康检查：
+
+```bash
+# 检查API健康状态
+curl http://localhost:3000/health
+
+# 检查数据库
+docker-compose exec timescaledb pg_isready -U postgres
+
+# 检查Redis
+docker-compose exec redis redis-cli ping
+
+# 查看所有容器健康状态
+docker-compose ps
+```
+
+### 停止服务
+
+```bash
+# 使用停止脚本
+./scripts/stop.sh
+
+# 或手动停止
+docker-compose down                              # 开发环境
+docker-compose -f docker-compose.prod.yml down   # 生产环境
 ```
 
 ## 项目结构

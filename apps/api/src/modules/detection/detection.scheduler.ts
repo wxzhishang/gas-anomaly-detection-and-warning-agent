@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, Inject } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { DetectionService } from './detection.service';
 
@@ -10,7 +10,7 @@ import { DetectionService } from './detection.service';
 export class DetectionScheduler {
   private readonly logger = new Logger(DetectionScheduler.name);
 
-  constructor(private readonly detectionService: DetectionService) {}
+  constructor(@Inject(DetectionService) private readonly detectionService: DetectionService) {}
 
   /**
    * 每分钟执行异常检测任务

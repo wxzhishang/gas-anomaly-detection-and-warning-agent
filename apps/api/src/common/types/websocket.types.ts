@@ -8,6 +8,7 @@ export enum WebSocketMessageType {
   SENSOR_DATA = 'sensor-data',
   ALERT = 'alert',
   CONNECTION = 'connection',
+  DEVICE_STATUS = 'device-status',
 }
 
 /**
@@ -38,6 +39,18 @@ export interface ConnectionMessage {
 }
 
 /**
+ * 设备状态更新消息
+ */
+export interface DeviceStatusMessage {
+  type: WebSocketMessageType.DEVICE_STATUS;
+  data: {
+    deviceId: string;
+    status: string;
+    updatedAt: Date;
+  };
+}
+
+/**
  * WebSocket消息联合类型
  */
-export type WebSocketMessage = SensorDataMessage | AlertMessage | ConnectionMessage;
+export type WebSocketMessage = SensorDataMessage | AlertMessage | ConnectionMessage | DeviceStatusMessage;

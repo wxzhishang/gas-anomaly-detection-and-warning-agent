@@ -21,7 +21,9 @@ export class DataService {
   constructor(
     @Inject(DATABASE_POOL)
     private readonly pool: Pool,
-  ) {}
+  ) {
+    this.logger.log('DataService initialized');
+  }
 
   /**
    * 验证传感器数据
@@ -259,7 +261,7 @@ export class DataService {
       FROM devices d
       LEFT JOIN sensor_data sd ON d.id = sd.device_id
       GROUP BY d.id, d.name, d.status, d.created_at, d.updated_at
-      ORDER BY d.created_at DESC
+      ORDER BY last_data_time DESC NULLS LAST, d.id ASC
     `;
 
     try {
@@ -311,6 +313,28 @@ export class DataService {
       };
     } catch (error: any) {
       this.logger.error(`Failed to get device by id: ${error.message}`, error.stack);
+      throw error;
+    }
+  }
+
+  /**
+   * 更新设备状态
+   * 
+   * @param deviceId 设备ID
+   * @param status 新状态
+   */
+  async updateDeviceStatus(deviceId: string, status: DeviceStatus): Promise<void> {
+    const query = `
+      UPDATE devices 
+      SET status = $1, updated_at = CURRENT_TIMESTAMP
+      WHERE id = $2
+    `;
+
+    try {
+      await this.pool.query(query, [status, deviceId]);
+      this.logger.log(`Updated device ${deviceId} status to ${status}`);
+    } catch (error: any) {
+      this.logger.error(`Failed to update device status: ${error.message}`, error.stack);
       throw error;
     }
   }

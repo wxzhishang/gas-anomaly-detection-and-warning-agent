@@ -5,18 +5,18 @@ export interface SensorData {
   id?: number;
   time: Date;
   deviceId: string;
-  inletPressure: number;    // 进口压力 (MPa)
-  outletPressure: number;   // 出口压力 (MPa)
-  temperature: number;      // 温度 (°C)
-  flowRate: number;         // 流量 (m³/h)
+  inletPressure: number;
+  outletPressure: number;
+  temperature: number;
+  flowRate: number;
 }
 
 /**
- * 传感器数据DTO（数据传输对象）
+ * 传感器数据DTO
  */
 export interface SensorDataDto {
   deviceId: string;
-  timestamp?: string;       // ISO 8601格式，可选
+  timestamp?: string;
   inletPressure: number;
   outletPressure: number;
   temperature: number;

@@ -1,4 +1,5 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit, Inject, forwardRef } from '@nestjs/common';
+import { OnEvent } from '@nestjs/event-emitter';
 import { DetectionService } from '../modules/detection/detection.service';
 import { AnalysisService } from '../modules/analysis/analysis.service';
 import { AlertService } from '../modules/alert/alert.service';
@@ -16,22 +17,50 @@ export class AgentService implements OnModuleInit {
   private workflow: any;
 
   constructor(
+    @Inject(forwardRef(() => DetectionService))
     private readonly detectionService: DetectionService,
+    @Inject(forwardRef(() => AnalysisService))
     private readonly analysisService: AnalysisService,
+    @Inject(forwardRef(() => AlertService))
     private readonly alertService: AlertService,
-  ) {}
+  ) {
+    this.logger.log(`AgentService constructor - services: detection=${!!detectionService}, analysis=${!!analysisService}, alert=${!!alertService}`);
+  }
 
   /**
    * 模块初始化时创建工作流
    */
   onModuleInit() {
     this.logger.log('Initializing LangGraph workflow');
+    this.logger.log(`Services available: detection=${!!this.detectionService}, analysis=${!!this.analysisService}, alert=${!!this.alertService}`);
+    
     this.workflow = createDetectionWorkflow(
       this.detectionService,
       this.analysisService,
       this.alertService,
     );
     this.logger.log('LangGraph workflow initialized successfully');
+  }
+
+  /**
+   * 监听传感器数据接收事件，触发异常检测工作流
+   */
+  @OnEvent('sensor.data.received')
+  async handleSensorDataReceived(payload: { deviceId: string; sensorData: SensorData }) {
+    this.logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+    this.logger.log(`🎯 收到事件: sensor.data.received`);
+    this.logger.log(`📱 设备: ${payload.deviceId}`);
+    this.logger.log(`📊 数据: 进口=${payload.sensorData.inletPressure}, 出口=${payload.sensorData.outletPressure}, 温度=${payload.sensorData.temperature}, 流量=${payload.sensorData.flowRate}`);
+    this.logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+    
+    try {
+      const result = await this.executeDetectionWorkflow(payload.deviceId, payload.sensorData);
+      this.logger.log(`✅ 工作流执行完成，异常: ${result.anomalyResult?.isAnomaly ?? false}`);
+    } catch (error) {
+      this.logger.error(
+        `❌ 处理传感器数据事件失败: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
   }
 
   /**

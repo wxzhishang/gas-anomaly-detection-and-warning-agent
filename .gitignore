@@ -42,3 +42,14 @@ yarn-error.log*
 
 # OS
 Thumbs.db
+
+# Docker
+docker-compose.override.yml
+
+# Database
+*.sql.backup
+*.dump
+
+# Logs
+logs/
+*.log

@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Logger,
+  Inject,
 } from '@nestjs/common';
 import { DataService } from './data.service';
 
@@ -13,7 +14,11 @@ import { DataService } from './data.service';
 export class DevicesController {
   private readonly logger = new Logger(DevicesController.name);
 
-  constructor(private readonly dataService: DataService) {}
+  constructor(
+    @Inject(DataService) private readonly dataService: DataService
+  ) {
+    this.logger.log(`DevicesController initialized, dataService: ${dataService ? 'exists' : 'undefined'}`);
+  }
 
   /**
    * GET /api/devices

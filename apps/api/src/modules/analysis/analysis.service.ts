@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, Inject, forwardRef } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ChatOpenAI } from '@langchain/openai';
 import { PromptTemplate } from '@langchain/core/prompts';
@@ -9,23 +9,35 @@ import { AnalysisMethod, RootCauseResult } from './analysis.types';
 @Injectable()
 export class AnalysisService {
   private readonly logger = new Logger(AnalysisService.name);
-  private readonly llm: ChatOpenAI;
+  private llm: ChatOpenAI | null = null;
   private readonly promptTemplate: PromptTemplate;
+  private readonly llmConfig: { apiKey: string; baseURL: string; model: string };
 
   constructor(
+    @Inject(forwardRef(() => RulesService))
     private readonly rulesService: RulesService,
     private readonly configService: ConfigService,
   ) {
-    // 初始化LLM客户端
-    const baseURL = this.configService.get<string>('GAS_LLM_BASE_URL');
-    this.llm = new ChatOpenAI({
-      openAIApiKey: this.configService.get<string>('GAS_LLM_API_KEY'),
-      modelName: this.configService.get<string>('GAS_LLM_MODEL', 'gpt-3.5-turbo'),
-      temperature: 0.3,
-      timeout: 30000, // 30秒超时
-      configuration: baseURL ? { baseURL } : undefined,
-    });
-
+    this.logger.log(`AnalysisService initialized`);
+    this.logger.log(`   rulesService: ${!!rulesService}`);
+    this.logger.log(`   configService: ${!!configService}`);
+    
+    // 在构造函数中保存配置，避免后续this上下文丢失
+    this.llmConfig = {
+      apiKey: configService?.get('GAS_LLM_API_KEY') || '',
+      baseURL: configService?.get('GAS_LLM_BASE_URL') || '',
+      model: configService?.get('GAS_LLM_MODEL') || 'gpt-3.5-turbo',
+    };
+    
+    this.logger.log(`   LLM_BASE_URL: ${this.llmConfig.baseURL}`);
+    this.logger.log(`   LLM_MODEL: ${this.llmConfig.model}`);
+    this.logger.log(`   LLM_API_KEY: ${this.llmConfig.apiKey ? '已配置' : '未配置'}`);
+    
+    // 绑定方法以保持this上下文
+    this.analyzeRootCause = this.analyzeRootCause.bind(this);
+    this.llmAnalysis = this.llmAnalysis.bind(this);
+    this.getLLM = this.getLLM.bind(this);
+    
     // 初始化提示词模板
     this.promptTemplate = PromptTemplate.fromTemplate(`
 你是一个燃气调压器故障诊断专家。
@@ -45,6 +57,34 @@ export class AnalysisService {
   "riskLevel": "high/medium/low"
 }}
 `);
+  }
+
+  /**
+   * 获取或初始化LLM客户端
+   */
+  private getLLM(): ChatOpenAI {
+    if (!this.llm) {
+      this.logger.log('初始化LLM客户端...');
+      this.logger.log(`   使用保存的配置`);
+      this.logger.log(`   BASE_URL: ${this.llmConfig.baseURL}`);
+      this.logger.log(`   MODEL: ${this.llmConfig.model}`);
+      this.logger.log(`   API_KEY: ${this.llmConfig.apiKey ? '已配置' : '未配置'}`);
+      
+      if (!this.llmConfig.apiKey) {
+        throw new Error('LLM API Key未配置');
+      }
+      
+      this.llm = new ChatOpenAI({
+        openAIApiKey: this.llmConfig.apiKey,
+        modelName: this.llmConfig.model,
+        temperature: 0.3,
+        timeout: 30000, // 30秒超时
+        configuration: this.llmConfig.baseURL ? { baseURL: this.llmConfig.baseURL } : undefined,
+      });
+      
+      this.logger.log('✅ LLM客户端初始化完成');
+    }
+    return this.llm;
   }
 
   /**
@@ -112,7 +152,7 @@ export class AnalysisService {
 
       // 使用Promise.race实现30秒超时
       const result = await Promise.race([
-        this.llm.invoke(prompt),
+        this.getLLM().invoke(prompt),
         new Promise<never>((_, reject) =>
           setTimeout(() => reject(new Error('LLM timeout')), 30000),
         ),
@@ -150,9 +190,11 @@ export class AnalysisService {
       };
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
-      this.logger.warn(
-        `LLM analysis failed: ${errorMessage}, using default result`,
-      );
+      const errorStack = error instanceof Error ? error.stack : '';
+      this.logger.error(`❌ LLM分析失败`);
+      this.logger.error(`   错误信息: ${errorMessage}`);
+      this.logger.error(`   错误堆栈: ${errorStack}`);
+      this.logger.warn(`使用默认结果作为降级策略`);
       return this.getDefaultResult();
     }
   }

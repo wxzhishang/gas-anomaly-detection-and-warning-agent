@@ -52,8 +52,10 @@ export class DetectionService {
     try {
       const result = await this.pool.query(query, [deviceId, this.BASELINE_SAMPLE_SIZE]);
       
-      if (result.rows.length === 0) {
-        throw new Error(`No historical data found for device ${deviceId}`);
+      if (result.rows.length < 10) {
+        // 数据不足，使用默认基线
+        this.logger.warn(`Insufficient data for device ${deviceId} (${result.rows.length} samples), using default baseline`);
+        return this.getDefaultBaseline(deviceId);
       }
 
       // 提取各指标的数据
@@ -78,8 +80,25 @@ export class DetectionService {
       return baseline;
     } catch (error: any) {
       this.logger.error(`Failed to calculate baseline: ${error.message}`, error.stack);
-      throw error;
+      // 返回默认基线而不是抛出错误
+      return this.getDefaultBaseline(deviceId);
     }
+  }
+
+  /**
+   * 获取默认基线（用于新设备或数据不足的情况）
+   * 基于正常运行参数设置
+   */
+  private getDefaultBaseline(deviceId: string): BaselineStats {
+    return {
+      deviceId,
+      inletPressure: { mean: 0.3, std: 0.02 },
+      outletPressure: { mean: 2.5, std: 0.1 },
+      temperature: { mean: 23, std: 2 },
+      flowRate: { mean: 500, std: 20 },
+      updatedAt: new Date(),
+      sampleSize: 0,
+    };
   }
 
   /**
@@ -181,6 +200,12 @@ export class DetectionService {
       // 获取基线统计
       const baseline = await this.getBaseline(deviceId);
 
+      this.logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+      this.logger.log(`🔍 异常检测开始 - 设备: ${deviceId}`);
+      this.logger.log(`📊 当前数据: 进口=${data.inletPressure}, 出口=${data.outletPressure}, 温度=${data.temperature}, 流量=${data.flowRate}`);
+      this.logger.log(`📈 基线数据: 进口=${baseline.inletPressure.mean}±${baseline.inletPressure.std}, 出口=${baseline.outletPressure.mean}±${baseline.outletPressure.std}, 温度=${baseline.temperature.mean}±${baseline.temperature.std}, 流量=${baseline.flowRate.mean}±${baseline.flowRate.std}`);
+      this.logger.log(`📏 基线样本数: ${baseline.sampleSize}, 阈值: ${this.ANOMALY_THRESHOLD}`);
+
       const anomalies: Anomaly[] = [];
 
       // 检测进口压力
@@ -189,6 +214,7 @@ export class DetectionService {
         baseline.inletPressure.mean,
         baseline.inletPressure.std
       );
+      this.logger.log(`   进口压力 Z-Score: ${inletZScore.toFixed(2)} (阈值: ${this.ANOMALY_THRESHOLD})`);
       if (inletZScore > this.ANOMALY_THRESHOLD) {
         anomalies.push({
           metric: 'inletPressure',
@@ -205,6 +231,7 @@ export class DetectionService {
         baseline.outletPressure.mean,
         baseline.outletPressure.std
       );
+      this.logger.log(`   出口压力 Z-Score: ${outletZScore.toFixed(2)} (阈值: ${this.ANOMALY_THRESHOLD})`);
       if (outletZScore > this.ANOMALY_THRESHOLD) {
         anomalies.push({
           metric: 'outletPressure',
@@ -221,6 +248,7 @@ export class DetectionService {
         baseline.temperature.mean,
         baseline.temperature.std
       );
+      this.logger.log(`   温度 Z-Score: ${tempZScore.toFixed(2)} (阈值: ${this.ANOMALY_THRESHOLD})`);
       if (tempZScore > this.ANOMALY_THRESHOLD) {
         anomalies.push({
           metric: 'temperature',
@@ -237,6 +265,7 @@ export class DetectionService {
         baseline.flowRate.mean,
         baseline.flowRate.std
       );
+      this.logger.log(`   流量 Z-Score: ${flowZScore.toFixed(2)} (阈值: ${this.ANOMALY_THRESHOLD})`);
       if (flowZScore > this.ANOMALY_THRESHOLD) {
         anomalies.push({
           metric: 'flowRate',
@@ -261,9 +290,15 @@ export class DetectionService {
 
       if (isAnomaly) {
         this.logger.warn(
-          `Anomaly detected for device ${deviceId}: ${anomalies.length} metrics exceeded threshold`
+          `⚠️ 检测到异常! 设备 ${deviceId}: ${anomalies.length} 个指标超过阈值`
         );
+        anomalies.forEach(a => {
+          this.logger.warn(`   - ${a.metric}: 值=${a.value}, 基线=${a.baseline}, Z-Score=${a.zScore.toFixed(2)}`);
+        });
+      } else {
+        this.logger.log(`✅ 未检测到异常 - 设备 ${deviceId}`);
       }
+      this.logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
 
       return result;
     } catch (error: any) {

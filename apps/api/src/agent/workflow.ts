@@ -5,6 +5,8 @@ import { AnalysisService } from '../modules/analysis/analysis.service';
 import { AlertService } from '../modules/alert/alert.service';
 import { Logger } from '@nestjs/common';
 
+const logger = new Logger('DetectionWorkflow');
+
 /**
  * 创建异常检测工作流
  * 
@@ -24,7 +26,14 @@ export function createDetectionWorkflow(
   analysisService: AnalysisService,
   alertService: AlertService,
 ) {
-  const logger = new Logger('DetectionWorkflow');
+  // 保存服务引用
+  const services = {
+    detection: detectionService,
+    analysis: analysisService,
+    alert: alertService,
+  };
+
+  logger.log(`Creating workflow with services: detection=${!!services.detection}, analysis=${!!services.analysis}, alert=${!!services.alert}`);
 
   /**
    * 节点1: 异常检测
@@ -34,7 +43,11 @@ export function createDetectionWorkflow(
     try {
       logger.log(`[detectNode] Starting anomaly detection for device ${state.deviceId}`);
       
-      const anomalyResult = await detectionService.detectAnomaly(
+      if (!services.detection) {
+        throw new Error('DetectionService is not available');
+      }
+      
+      const anomalyResult = await services.detection.detectAnomaly(
         state.deviceId,
         state.sensorData,
       );
@@ -67,7 +80,20 @@ export function createDetectionWorkflow(
         `[analyzeNode] Starting root cause analysis for ${state.anomalyResult.anomalies.length} anomalies`,
       );
 
-      const rootCause = await analysisService.analyzeRootCause(
+      if (!services.analysis) {
+        logger.warn('[analyzeNode] AnalysisService is not available, using default result');
+        return {
+          ...state,
+          rootCause: {
+            cause: '系统检测到异常，正在分析中',
+            recommendation: '建议人工检查设备状态',
+            confidence: 0.3,
+            method: 'default',
+          },
+        };
+      }
+
+      const rootCause = await services.analysis.analyzeRootCause(
         state.anomalyResult.anomalies,
       );
 
@@ -79,7 +105,16 @@ export function createDetectionWorkflow(
       return { ...state, rootCause };
     } catch (error) {
       logger.error(`[analyzeNode] Error: ${error instanceof Error ? error.message : String(error)}`);
-      return { ...state, error: error instanceof Error ? error : new Error(String(error)) };
+      // 返回默认的根因分析结果，而不是中断流程
+      return {
+        ...state,
+        rootCause: {
+          cause: '系统检测到异常，分析过程出错',
+          recommendation: '建议人工检查设备状态',
+          confidence: 0.3,
+          method: 'default',
+        },
+      };
     }
   };
 
@@ -97,8 +132,12 @@ export function createDetectionWorkflow(
 
       logger.log('[alertNode] Generating alert');
 
+      if (!services.alert) {
+        throw new Error('AlertService is not available');
+      }
+
       // 生成预警
-      const alert = await alertService.createAlert(
+      const alert = await services.alert.createAlert(
         state.deviceId,
         state.anomalyResult,
         state.rootCause!,
@@ -116,7 +155,6 @@ export function createDetectionWorkflow(
   /**
    * 节点4: 预警推送
    * 通过WebSocket推送预警到前端
-   * 注意: WebSocket网关尚未实现,此处仅调用pushAlert方法
    */
   const pushNode = async (state: AgentState) => {
     try {
@@ -126,16 +164,23 @@ export function createDetectionWorkflow(
         return state;
       }
 
-      logger.log('[pushNode] Pushing alert via WebSocket');
+      logger.log(`[pushNode] 🚀 开始推送预警`);
+      logger.log(`[pushNode]    预警ID: ${state.alert.id}`);
+      logger.log(`[pushNode]    设备: ${state.alert.deviceId}`);
+      logger.log(`[pushNode]    等级: ${state.alert.level}`);
 
-      // 调用预警推送方法(实际推送逻辑将在WebSocket Gateway中实现)
-      await alertService.pushAlert(state.alert);
+      if (!services.alert) {
+        throw new Error('AlertService is not available');
+      }
 
-      logger.log('[pushNode] Alert pushed successfully');
+      // 调用预警推送方法
+      await services.alert.pushAlert(state.alert);
+
+      logger.log('[pushNode] ✅ 预警推送完成');
 
       return state;
     } catch (error) {
-      logger.error(`[pushNode] Error: ${error instanceof Error ? error.message : String(error)}`);
+      logger.error(`[pushNode] ❌ Error: ${error instanceof Error ? error.message : String(error)}`);
       return { ...state, error: error instanceof Error ? error : new Error(String(error)) };
     }
   };

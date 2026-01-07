@@ -20,11 +20,40 @@ import { RootCauseResult } from '../../common/types/analysis.types';
 @Injectable()
 export class AlertService {
   private readonly logger = new Logger(AlertService.name);
+  private alertGateway: any; // 延迟注入,避免循环依赖
 
   constructor(
     @Inject(DATABASE_POOL)
     private readonly pool: Pool,
   ) {}
+
+  /**
+   * 设置AlertGateway(用于避免循环依赖)
+   */
+  setAlertGateway(gateway: any) {
+    this.alertGateway = gateway;
+  }
+
+  /**
+   * 更新设备状态
+   * 根据预警等级更新设备状态
+   */
+  private async updateDeviceStatus(deviceId: string, alertLevel: AlertLevel): Promise<void> {
+    const status = alertLevel === AlertLevel.CRITICAL ? 'critical' : 'warning';
+    const query = `
+      UPDATE devices 
+      SET status = $1, updated_at = CURRENT_TIMESTAMP
+      WHERE id = $2
+    `;
+
+    try {
+      await this.pool.query(query, [status, deviceId]);
+      this.logger.log(`Updated device ${deviceId} status to ${status}`);
+    } catch (error: any) {
+      this.logger.error(`Failed to update device status: ${error.message}`, error.stack);
+      // 不抛出错误，避免影响预警创建
+    }
+  }
 
   /**
    * 创建预警
@@ -75,6 +104,9 @@ export class AlertService {
         rootCause: row.root_cause,
         createdAt: row.created_at,
       };
+
+      // 更新设备状态
+      await this.updateDeviceStatus(deviceId, level);
 
       this.logger.log(
         `Created alert for device ${deviceId} with level ${level}`,
@@ -141,14 +173,23 @@ export class AlertService {
   /**
    * 推送预警
    * 通过WebSocket广播预警到所有连接的客户端
-   * 注意：实际的WebSocket推送逻辑在AlertGateway中实现
    * 
    * @param alert 预警记录
    */
   async pushAlert(alert: Alert): Promise<void> {
-    // 这个方法将在AlertGateway中被调用
-    // 这里只是一个占位符，实际推送逻辑在Gateway中
-    this.logger.log(`Alert ${alert.id} ready for push`);
+    this.logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+    this.logger.log(`📤 pushAlert 被调用`);
+    this.logger.log(`   预警ID: ${alert.id}`);
+    this.logger.log(`   设备: ${alert.deviceId}`);
+    this.logger.log(`   alertGateway 是否存在: ${!!this.alertGateway}`);
+    
+    if (this.alertGateway) {
+      this.alertGateway.broadcastAlert(alert);
+      this.logger.log(`✅ 预警 ${alert.id} 已通过 WebSocket 推送`);
+    } else {
+      this.logger.warn('❌ AlertGateway 未初始化，跳过推送');
+    }
+    this.logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
   }
 
   /**

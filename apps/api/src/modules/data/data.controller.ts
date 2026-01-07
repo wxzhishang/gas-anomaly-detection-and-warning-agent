@@ -9,9 +9,14 @@ import {
   HttpStatus,
   BadRequestException,
   Logger,
+  Inject,
+  forwardRef,
+  Optional,
 } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { DataService } from './data.service';
 import { SensorDataDto } from '../../common/types/sensor-data.types';
+import { AlertGateway } from '../alert/alert.gateway';
 
 /**
  * 数据采集控制器
@@ -21,7 +26,17 @@ import { SensorDataDto } from '../../common/types/sensor-data.types';
 export class DataController {
   private readonly logger = new Logger(DataController.name);
 
-  constructor(private readonly dataService: DataService) {}
+  constructor(
+    @Inject(DataService)
+    private readonly dataService: DataService,
+    @Inject(forwardRef(() => AlertGateway))
+    private readonly alertGateway: AlertGateway,
+    @Optional()
+    @Inject(EventEmitter2)
+    private readonly eventEmitter?: EventEmitter2,
+  ) {
+    this.logger.log(`DataController initialized, eventEmitter: ${this.eventEmitter ? 'available' : 'not available'}`);
+  }
 
   /**
    * POST /api/data
@@ -54,6 +69,20 @@ export class DataController {
       const result = await this.dataService.receiveSensorData(data);
       
       this.logger.log(`Received sensor data from device ${data.deviceId}`);
+      
+      // 通过WebSocket广播传感器数据
+      this.alertGateway.broadcastSensorData(result);
+      
+      // 发送事件触发Agent工作流（异步，不阻塞响应）
+      if (this.eventEmitter) {
+        this.logger.log(`📤 Emitting event: sensor.data.received for device ${data.deviceId}`);
+        this.eventEmitter.emit('sensor.data.received', {
+          deviceId: data.deviceId,
+          sensorData: result,
+        });
+      } else {
+        this.logger.warn('EventEmitter not available, skipping agent workflow');
+      }
       
       return {
         success: true,

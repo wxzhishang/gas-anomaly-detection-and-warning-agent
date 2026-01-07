@@ -1,9 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
+import { CustomLogger } from './common/logger/logger.config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // 使用自定义日志服务
+  const app = await NestFactory.create(AppModule, {
+    logger: new CustomLogger('Bootstrap'),
+  });
 
   // 启用CORS
   app.enableCors({
@@ -20,11 +25,15 @@ async function bootstrap() {
     })
   );
 
+  // 启用全局异常过滤器
+  app.useGlobalFilters(new GlobalExceptionFilter());
+
   const port = process.env.PORT || 3001;
   await app.listen(port);
 
-  console.log(`🚀 API服务启动成功: http://localhost:${port}`);
-  console.log(`📊 环境: ${process.env.NODE_ENV || 'development'}`);
+  const logger = new CustomLogger('Application');
+  logger.log(`API服务启动成功: http://localhost:${port}`);
+  logger.log(`环境: ${process.env.NODE_ENV || 'development'}`);
 }
 
 bootstrap();

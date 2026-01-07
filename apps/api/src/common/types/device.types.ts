@@ -3,6 +3,8 @@
  */
 export enum DeviceStatus {
   ACTIVE = 'active',
+  WARNING = 'warning',
+  CRITICAL = 'critical',
   INACTIVE = 'inactive',
   MAINTENANCE = 'maintenance',
 }
