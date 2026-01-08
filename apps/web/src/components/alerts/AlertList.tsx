@@ -1,13 +1,35 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { cn, formatRelativeTime } from '@/lib/utils';
 import type { Alert } from '@/lib/types';
 
 interface AlertListProps {
   alerts: Alert[];
+  selectedDevice?: string | null;
 }
 
-export default function AlertList({ alerts }: AlertListProps) {
+// TODO: 当预警数量较大时（>100），考虑实现虚拟列表优化性能
+export default function AlertList({ alerts, selectedDevice }: AlertListProps) {
+  const [listHeight, setListHeight] = useState(400);
+
+  // 根据窗口高度动态计算列表高度
+  useEffect(() => {
+    const updateHeight = () => {
+      const availableHeight = window.innerHeight - 200;
+      setListHeight(Math.max(300, availableHeight));
+    };
+
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
+  }, []);
+
+  // 根据选中的设备过滤预警
+  const filteredAlerts = selectedDevice
+    ? alerts.filter((alert) => alert.deviceId === selectedDevice)
+    : alerts;
+
   const getLevelColor = (level: string) => {
     switch (level.toLowerCase()) {
       case 'warning':
@@ -31,21 +53,28 @@ export default function AlertList({ alerts }: AlertListProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow h-full flex flex-col max-h-[600px] lg:max-h-none">
-      <div className="px-3 sm:px-4 py-2 sm:py-3 border-b border-gray-200">
+    <div className="bg-white rounded-lg shadow flex flex-col">
+      <div className="px-3 sm:px-4 py-2 sm:py-3 border-b border-gray-200 flex-shrink-0">
         <h2 className="text-base sm:text-lg font-semibold text-gray-900">预警列表</h2>
-        <p className="text-xs sm:text-sm text-gray-500 mt-1">共 {alerts.length} 条预警</p>
+        <p className="text-xs sm:text-sm text-gray-500 mt-1">
+          {selectedDevice ? `设备 ${selectedDevice} 的预警` : '全部预警'} · 共 {filteredAlerts.length} 条
+        </p>
       </div>
 
-      <div className="flex-1 overflow-y-auto">
-        {alerts.length === 0 ? (
+      <div 
+        className="flex-1 overflow-y-auto"
+        style={{ maxHeight: listHeight }}
+      >
+        {filteredAlerts.length === 0 ? (
           <div className="px-3 sm:px-4 py-6 sm:py-8 text-center text-gray-500">
             <p className="text-sm sm:text-base">暂无预警</p>
-            <p className="text-xs sm:text-sm mt-2">系统运行正常</p>
+            <p className="text-xs sm:text-sm mt-2">
+              {selectedDevice ? '该设备运行正常' : '系统运行正常'}
+            </p>
           </div>
         ) : (
           <div className="divide-y divide-gray-200">
-            {alerts.map((alert) => {
+            {filteredAlerts.map((alert) => {
               const maxZScore = alert.anomalies?.reduce((max, a) => Math.max(max, a.zScore), 0) || 0;
               
               return (

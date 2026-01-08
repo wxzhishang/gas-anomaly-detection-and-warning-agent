@@ -194,7 +194,7 @@
 
 **Monorepo管理**
 - **Turbo**：构建系统
-- **yarn**：包管理器
+- **bun**：包管理器
 
 **代码质量**
 - **ESLint + Prettier**：代码规范

@@ -36,11 +36,12 @@ export default function Dashboard() {
         });
       }
 
-      // 更新设备状态（所有设备都更新）
+      // 只更新设备的最后更新时间，不改变状态
+      // 状态由 device_status 消息或预警消息来更新
       setDevices((prev) =>
         prev.map((device) =>
           device.id === data.deviceId
-            ? { ...device, updatedAt: data.time, status: 'active' }
+            ? { ...device, updatedAt: data.time }
             : device
         )
       );
@@ -52,6 +53,16 @@ export default function Dashboard() {
         console.log('[Dashboard] 更新后的预警列表长度:', newAlerts.length);
         return newAlerts;
       });
+      
+      // 根据预警等级更新设备状态
+      const alertData = message.data;
+      setDevices((prev) =>
+        prev.map((device) =>
+          device.id === alertData.deviceId
+            ? { ...device, status: alertData.level, updatedAt: new Date().toISOString() }
+            : device
+        )
+      );
     } else if (message.type === 'device_status') {
       // 更新设备状态
       const { deviceId, status, updatedAt } = message.data;
@@ -240,7 +251,7 @@ export default function Dashboard() {
 
           {/* 右侧：预警列表 */}
           <div className="md:col-span-2 lg:col-span-1 order-2 lg:order-3">
-            <AlertList alerts={alerts} />
+            <AlertList alerts={alerts} selectedDevice={selectedDevice} />
           </div>
         </div>
       </div>

@@ -31,63 +31,26 @@ export class DetectionService {
 
   /**
    * 计算设备基线统计
-   * 查询最近1000条历史数据，计算每个指标的均值和标准差
+   * 
+   * 重要：为了避免异常数据污染基线，我们使用固定的默认基线
+   * 默认基线基于设备正常运行参数设置，确保检测标准一致
    * 
    * @param deviceId 设备ID
    * @returns 基线统计数据
    */
   async calculateBaseline(deviceId: string): Promise<BaselineStats> {
-    const query = `
-      SELECT 
-        inlet_pressure,
-        outlet_pressure,
-        temperature,
-        flow_rate
-      FROM sensor_data
-      WHERE device_id = $1
-      ORDER BY time DESC
-      LIMIT $2
-    `;
-
-    try {
-      const result = await this.pool.query(query, [deviceId, this.BASELINE_SAMPLE_SIZE]);
-      
-      if (result.rows.length < 10) {
-        // 数据不足，使用默认基线
-        this.logger.warn(`Insufficient data for device ${deviceId} (${result.rows.length} samples), using default baseline`);
-        return this.getDefaultBaseline(deviceId);
-      }
-
-      // 提取各指标的数据
-      const inletPressures = result.rows.map(row => row.inlet_pressure);
-      const outletPressures = result.rows.map(row => row.outlet_pressure);
-      const temperatures = result.rows.map(row => row.temperature);
-      const flowRates = result.rows.map(row => row.flow_rate);
-
-      // 计算统计数据
-      const baseline: BaselineStats = {
-        deviceId,
-        inletPressure: this.calculateStats(inletPressures),
-        outletPressure: this.calculateStats(outletPressures),
-        temperature: this.calculateStats(temperatures),
-        flowRate: this.calculateStats(flowRates),
-        updatedAt: new Date(),
-        sampleSize: result.rows.length,
-      };
-
-      this.logger.log(`Calculated baseline for device ${deviceId} with ${result.rows.length} samples`);
-
-      return baseline;
-    } catch (error: any) {
-      this.logger.error(`Failed to calculate baseline: ${error.message}`, error.stack);
-      // 返回默认基线而不是抛出错误
-      return this.getDefaultBaseline(deviceId);
-    }
+    // 始终使用默认基线，避免异常数据污染
+    // 如果需要动态基线，可以考虑：
+    // 1. 只使用标记为"正常"的历史数据
+    // 2. 使用中位数而非均值来减少异常值影响
+    // 3. 使用滑动窗口排除最近的异常数据
+    this.logger.log(`Using default baseline for device ${deviceId}`);
+    return this.getDefaultBaseline(deviceId);
   }
 
   /**
-   * 获取默认基线（用于新设备或数据不足的情况）
-   * 基于正常运行参数设置
+   * 获取默认基线（基于设备正常运行参数）
+   * 这些值应该根据实际设备规格设置
    */
   private getDefaultBaseline(deviceId: string): BaselineStats {
     return {
@@ -128,47 +91,16 @@ export class DetectionService {
   }
 
   /**
-   * 获取缓存的基线统计
-   * 如果缓存不存在或失败，则重新计算
+   * 获取基线统计
+   * 始终使用默认基线，避免被污染的缓存数据影响检测
    * 
    * @param deviceId 设备ID
    * @returns 基线统计数据
    */
   async getBaseline(deviceId: string): Promise<BaselineStats> {
-    const cacheKey = `baseline:${deviceId}`;
-
-    try {
-      // 尝试从Redis获取缓存
-      const cached = await this.redis.get(cacheKey);
-      
-      if (cached) {
-        this.logger.debug(`Baseline cache hit for device ${deviceId}`);
-        return JSON.parse(cached);
-      }
-
-      this.logger.debug(`Baseline cache miss for device ${deviceId}`);
-    } catch (error: any) {
-      // Redis连接失败，记录警告但继续执行
-      this.logger.warn(`Redis connection failed, falling back to database: ${error.message}`);
-    }
-
-    // 缓存未命中或Redis失败，重新计算
-    const baseline = await this.calculateBaseline(deviceId);
-
-    // 尝试缓存结果
-    try {
-      await this.redis.setEx(
-        cacheKey,
-        this.BASELINE_CACHE_TTL,
-        JSON.stringify(baseline)
-      );
-      this.logger.debug(`Cached baseline for device ${deviceId}`);
-    } catch (error: any) {
-      // 缓存失败不影响主流程
-      this.logger.warn(`Failed to cache baseline: ${error.message}`);
-    }
-
-    return baseline;
+    // 直接返回默认基线，不使用缓存
+    // 这样可以确保检测标准一致，不受历史异常数据影响
+    return this.getDefaultBaseline(deviceId);
   }
 
   /**

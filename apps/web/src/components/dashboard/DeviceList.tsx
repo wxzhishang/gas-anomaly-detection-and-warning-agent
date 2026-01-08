@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { cn, formatRelativeTime } from '@/lib/utils';
 import type { Device } from '@/lib/types';
 
@@ -9,11 +10,26 @@ interface DeviceListProps {
   onSelectDevice: (deviceId: string) => void;
 }
 
+// TODO: 当设备数量较大时（>100），考虑实现虚拟列表优化性能
 export default function DeviceList({
   devices,
   selectedDevice,
   onSelectDevice,
 }: DeviceListProps) {
+  const [listHeight, setListHeight] = useState(400);
+
+  // 根据窗口高度动态计算列表高度
+  useEffect(() => {
+    const updateHeight = () => {
+      const availableHeight = window.innerHeight - 200;
+      setListHeight(Math.max(300, availableHeight));
+    };
+
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
+  }, []);
+
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case 'active':
@@ -49,13 +65,16 @@ export default function DeviceList({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow max-h-[600px] lg:max-h-none flex flex-col">
-      <div className="px-3 sm:px-4 py-2 sm:py-3 border-b border-gray-200">
+    <div className="bg-white rounded-lg shadow flex flex-col">
+      <div className="px-3 sm:px-4 py-2 sm:py-3 border-b border-gray-200 flex-shrink-0">
         <h2 className="text-base sm:text-lg font-semibold text-gray-900">设备列表</h2>
         <p className="text-xs sm:text-sm text-gray-500 mt-1">共 {devices.length} 台设备</p>
       </div>
 
-      <div className="divide-y divide-gray-200 overflow-y-auto flex-1">
+      <div 
+        className="divide-y divide-gray-200 overflow-y-auto flex-1"
+        style={{ maxHeight: listHeight }}
+      >
         {devices.length === 0 ? (
           <div className="px-3 sm:px-4 py-6 sm:py-8 text-center text-gray-500">
             <p className="text-sm sm:text-base">暂无设备</p>
