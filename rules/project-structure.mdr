@@ -1,0 +1,43 @@
+---
+alwaysApply: true
+---
+
+# 燃气调压器异常检测系统 - 项目结构
+
+## Monorepo 架构
+
+本项目使用 Turbo + Bun 管理的 Monorepo，包含两个应用：
+
+- `apps/api` - NestJS 后端服务（端口 3001）
+- `apps/web` - Next.js 14 前端应用（端口 3000）
+
+## 包管理器
+
+必须使用 **Bun** 作为包管理器（`bun install`），不要使用 npm 或 yarn。
+
+## 关键入口文件
+
+- 后端入口：[apps/api/src/main.ts](mdr:apps/api/src/main.ts)
+- 前端入口：`apps/web/src/app/page.tsx`
+- 数据库初始化：[scripts/init-db.sql](mdr:scripts/init-db.sql)
+- 数据生成器：[scripts/data-generator.ts](mdr:scripts/data-generator.ts)
+
+## 环境变量
+
+- 后端环境变量位于 `apps/api/.env`
+- LLM 配置使用 `GAS_LLM_API_KEY`、`GAS_LLM_BASE_URL`、`GAS_LLM_MODEL` 前缀
+- 前端 API 地址通过 `NEXT_PUBLIC_API_URL` 配置
+
+## 启动命令
+
+```bash
+# 启动基础设施
+docker-compose up -d
+
+# 开发模式
+bun run dev
+
+# 生成测试数据
+bun run generate:data
+bun run generate:data:anomaly  # 带异常数据
+```

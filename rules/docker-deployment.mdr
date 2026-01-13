@@ -1,0 +1,43 @@
+---
+globs: docker-compose*.yml,**/Dockerfile
+---
+
+# Docker 部署规范
+
+## 基础设施服务
+
+开发环境使用 [docker-compose.yml](mdr:docker-compose.yml)：
+
+### TimescaleDB
+- 镜像：`timescale/timescaledb:latest-pg16`
+- 端口：5432
+- 数据卷：`timescale-data`
+- 初始化脚本自动挂载：`./scripts/init-db.sql`
+
+### Redis
+- 镜像：`redis:7-alpine`
+- 端口：6379
+- 内存限制：256mb
+- 淘汰策略：allkeys-lru
+
+## 网络
+
+所有服务使用 `gas-regulator-network` 桥接网络。
+
+## 健康检查
+
+```bash
+# 数据库
+docker-compose exec timescaledb pg_isready -U postgres
+
+# Redis
+docker-compose exec redis redis-cli ping
+```
+
+## 生产部署
+
+使用 `docker-compose.prod.yml` 或启动脚本：
+```bash
+./scripts/start-prod.sh
+./scripts/stop.sh
+```

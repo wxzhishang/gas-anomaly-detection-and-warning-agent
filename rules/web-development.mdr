@@ -1,0 +1,46 @@
+---
+globs: apps/web/**/*.ts,apps/web/**/*.tsx
+---
+
+# Web 前端开发规范
+
+## 技术栈
+
+- Next.js 14 App Router
+- Tailwind CSS 样式
+- ECharts 图表（通过 echarts-for-react）
+- Socket.IO 客户端实时通信
+
+## API 客户端
+
+使用 [apps/web/src/lib/api.ts](mdr:apps/web/src/lib/api.ts) 中的 `apiClient` 单例：
+```typescript
+import { apiClient } from '@/lib/api';
+const devices = await apiClient.getDevices();
+```
+
+## WebSocket 连接
+
+使用自定义 Hook [apps/web/src/hooks/useWebSocket.ts](mdr:apps/web/src/hooks/useWebSocket.ts)：
+```typescript
+const { isConnected, error } = useWebSocket({
+  onMessage: handleMessage,
+  autoConnect: true,
+});
+```
+
+消息类型：`sensor_data`、`alert`、`device_status`、`connection`
+
+## 路径别名
+
+使用 `@/` 别名指向 `src/` 目录：
+```typescript
+import { cn } from '@/lib/utils';
+import type { Alert } from '@/lib/types';
+```
+
+## 组件目录
+
+- `components/dashboard/` - 仪表盘相关组件
+- `components/alerts/` - 预警列表组件
+- `components/ui/` - 通用 UI 组件（Skeleton、ErrorAlert）

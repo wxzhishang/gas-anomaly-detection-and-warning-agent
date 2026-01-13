@@ -1,0 +1,41 @@
+---
+globs: apps/api/src/modules/analysis/**/*.ts
+---
+
+# 根因分析规则
+
+## 分析流程
+
+1. 优先使用规则引擎匹配（置信度 0.8）
+2. 规则未匹配时调用 LLM 分析（置信度 0.6，30秒超时）
+3. LLM 失败时返回默认结果（置信度 0.3）
+
+## 规则定义
+
+规则定义在 [apps/api/src/modules/analysis/rules.service.ts](mdr:apps/api/src/modules/analysis/rules.service.ts)：
+
+| 规则ID | 条件 | 故障原因 |
+|--------|------|----------|
+| rule-001 | 出口压力 Z-Score > 4 | 调压器膜片老化或损坏 |
+| rule-002 | 温度 > 60°C | 阀门卡滞 |
+| rule-003 | 进口压力 Z-Score > 4 | 上游供气不稳定 |
+| rule-004 | 流量 Z-Score > 4 | 管道泄漏或用气量突增 |
+| rule-005 | 出口压力和温度同时 Z-Score > 3 | 调压器整体故障 |
+
+## LLM 配置
+
+环境变量（`apps/api/.env`）：
+```
+GAS_LLM_API_KEY=your_api_key
+GAS_LLM_BASE_URL=https://api.openai.com/v1
+GAS_LLM_MODEL=gpt-3.5-turbo
+```
+
+LLM 返回 JSON 格式：
+```json
+{
+  "cause": "故障原因",
+  "recommendation": "处理建议",
+  "riskLevel": "high/medium/low"
+}
+```

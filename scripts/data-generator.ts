@@ -31,7 +31,13 @@ const NORMAL_RANGES = {
 };
 
 // 异常数据配置
-const ANOMALY_CONFIGS = {
+interface AnomalyConfig {
+  outletPressure?: { min: number; max: number; mean: number; std: number };
+  temperature?: { min: number; max: number; mean: number; std: number };
+  flowRate?: { min: number; max: number; mean: number; std: number };
+}
+
+const ANOMALY_CONFIGS: Record<'low-pressure' | 'high-temperature' | 'high-flow', AnomalyConfig> = {
   'low-pressure': {
     outletPressure: { min: 0.8, max: 1.2, mean: 1.0, std: 0.1 },
   },

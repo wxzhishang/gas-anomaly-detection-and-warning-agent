@@ -1,0 +1,42 @@
+---
+globs: apps/api/**/*.ts
+---
+
+# API 开发规范
+
+## 运行时
+
+使用 `tsx` 直接运行 TypeScript，无需编译步骤：
+```bash
+bun run dev  # 使用 tsx watch src/main.ts
+```
+
+## 模块结构
+
+后端采用 NestJS 模块化架构，核心模块位于 `apps/api/src/modules/`：
+
+- `data/` - 数据采集模块（REST API 接收传感器数据）
+- `detection/` - 异常检测模块（Z-Score 统计方法）
+- `analysis/` - 根因分析模块（规则引擎 + LLM）
+- `alert/` - 预警模块（WebSocket 推送）
+
+## 依赖注入 Token
+
+数据库和 Redis 使用自定义注入 Token：
+```typescript
+@Inject(DATABASE_POOL) private readonly pool: Pool
+@Inject(REDIS_CLIENT) private readonly redis: any
+```
+
+## Agent 工作流
+
+使用 LangGraph 实现检测工作流，节点顺序：
+`detect` → `analyze` → `alert` → `push`
+
+工作流定义在 [apps/api/src/agent/workflow.ts](mdr:apps/api/src/agent/workflow.ts)
+
+## 异常检测参数
+
+- Z-Score 阈值：3（超过则判定为异常）
+- 基线使用固定默认值，避免异常数据污染
+- 预警等级：异常指标 > 2 或 Z-Score > 5 为 CRITICAL，否则为 WARNING

@@ -1,0 +1,47 @@
+---
+globs: scripts/*.sql,apps/api/src/modules/data/**/*.ts
+---
+
+# 数据库规范
+
+## TimescaleDB 时序数据库
+
+使用 TimescaleDB 扩展的 PostgreSQL，`sensor_data` 表是超表（hypertable）。
+
+## 核心表结构
+
+### devices - 设备表
+```sql
+id VARCHAR(50) PRIMARY KEY  -- 设备ID，如 'REG-001'
+name VARCHAR(255)           -- 设备名称
+status VARCHAR(20)          -- 状态：active
+```
+
+### sensor_data - 传感器数据（超表）
+```sql
+time TIMESTAMPTZ            -- 时间戳（分区键）
+device_id VARCHAR(50)       -- 设备ID（外键）
+inlet_pressure DOUBLE       -- 进口压力 (MPa)
+outlet_pressure DOUBLE      -- 出口压力 (MPa)
+temperature DOUBLE          -- 温度 (°C)
+flow_rate DOUBLE            -- 流量 (m³/h)
+```
+
+### alerts - 预警表
+```sql
+id SERIAL PRIMARY KEY
+device_id VARCHAR(50)
+level VARCHAR(20)           -- WARNING 或 CRITICAL
+message TEXT
+anomalies JSONB             -- 异常详情
+root_cause JSONB            -- 根因分析结果
+created_at TIMESTAMPTZ
+```
+
+## 数据验证范围
+
+定义在 [apps/api/src/common/types/sensor-data.types.ts](mdr:apps/api/src/common/types/sensor-data.types.ts)：
+- 进口压力：0.1 - 1.0 MPa
+- 出口压力：0.5 - 5.0 MPa
+- 温度：-20 - 80 °C
+- 流量：0 - 2000 m³/h
