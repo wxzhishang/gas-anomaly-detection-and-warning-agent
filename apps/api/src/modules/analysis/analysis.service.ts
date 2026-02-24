@@ -50,10 +50,10 @@ export class AnalysisService {
 2. 具体的处理建议
 3. 风险等级评估
 
-以JSON格式返回：
+以JSON格式返回，其中cause和recommendation字段可以使用换行符(\\n)来分点说明：
 {{
-  "cause": "故障原因",
-  "recommendation": "处理建议",
+  "cause": "故障原因（可以分点说明，用\\n分隔）",
+  "recommendation": "处理建议（可以分点说明，用\\n分隔，建议使用1. 2. 3.格式）",
   "riskLevel": "high/medium/low"
 }}
 `);

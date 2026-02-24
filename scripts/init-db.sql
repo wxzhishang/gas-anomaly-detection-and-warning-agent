@@ -20,8 +20,15 @@ CREATE TABLE IF NOT EXISTS sensor_data (
     FOREIGN KEY (device_id) REFERENCES devices(id) ON DELETE CASCADE
 );
 
--- 将sensor_data转换为TimescaleDB超表
-SELECT create_hypertable('sensor_data', 'time', if_not_exists => TRUE);
+-- 将sensor_data转换为TimescaleDB超表（如果TimescaleDB可用）
+-- 注意：如果没有安装TimescaleDB扩展，这行会报错但不影响表的创建
+DO $$
+BEGIN
+    PERFORM create_hypertable('sensor_data', 'time', if_not_exists => TRUE);
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE NOTICE 'TimescaleDB not available, using regular table';
+END $$;
 
 -- 创建索引以提高查询性能
 CREATE INDEX IF NOT EXISTS idx_sensor_data_device_time ON sensor_data (device_id, time DESC);
