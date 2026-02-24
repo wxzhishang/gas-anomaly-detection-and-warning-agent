@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "version": "2.8",
+=======
+  "version": "2.6",
+>>>>>>> 7fd82e3919c699fcdfec3153cff017f045035a22
   "children": [
     {
       "type": "frame",
@@ -14,6 +18,7 @@
       "layout": "none"
     },
     {
+<<<<<<< HEAD
       "type": "text",
       "id": "5708n",
       "x": 100,
@@ -181,10 +186,123 @@
                   "fontFamily": "Inter",
                   "fontSize": 12,
                   "fontWeight": "normal"
+=======
+      "type": "frame",
+      "id": "IZFqG",
+      "x": 0,
+      "y": 0,
+      "name": "Architecture Diagram",
+      "width": 1000,
+      "fill": "#FFFFFF",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": 40,
+      "children": [
+        {
+          "type": "text",
+          "id": "F5lcs",
+          "name": "title",
+          "fill": "#333333",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "Gas Anomaly Detection & Warning AI Agent Architecture",
+          "textAlign": "center",
+          "fontFamily": "Inter",
+          "fontSize": 32,
+          "fontWeight": "bold"
+        },
+        {
+          "type": "frame",
+          "id": "sDNAX",
+          "name": "Client Layer",
+          "width": "fill_container",
+          "fill": "$bg_web",
+          "cornerRadius": 8,
+          "stroke": {
+            "thickness": 1,
+            "fill": "$primary"
+          },
+          "layout": "vertical",
+          "gap": 16,
+          "padding": 24,
+          "children": [
+            {
+              "type": "text",
+              "id": "yUmDV",
+              "name": "webTitle",
+              "fill": "$primary",
+              "content": "Frontend (Next.js Web App)",
+              "fontFamily": "Inter",
+              "fontSize": 20,
+              "fontWeight": "bold"
+            },
+            {
+              "type": "frame",
+              "id": "M8Nuh",
+              "name": "webContent",
+              "width": "fill_container",
+              "gap": 20,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "NilLF",
+                  "name": "Dashboard",
+                  "width": 220,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 4,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "$primary"
+                  },
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "m7D9W",
+                      "name": "dashText",
+                      "fill": "#333333",
+                      "textGrowth": "fixed-width",
+                      "width": 200,
+                      "content": "Dashboard UI\n• 实时数据看板\n• 设备状态监控\n• 异常告警列表",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "TOtMf",
+                  "name": "WebSocket Hook",
+                  "width": 220,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 4,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "$primary"
+                  },
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "CK1jH",
+                      "name": "wsText",
+                      "fill": "#333333",
+                      "textGrowth": "fixed-width",
+                      "width": 200,
+                      "content": "WebSocket Client\n• 监听服务端推送\n• 自动重连机制\n• 弹窗告警提示",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+>>>>>>> 7fd82e3919c699fcdfec3153cff017f045035a22
                 }
               ]
             }
           ]
+<<<<<<< HEAD
         }
       ]
     },
@@ -371,10 +489,133 @@
                   "fontFamily": "Inter",
                   "fontSize": 12,
                   "fontWeight": "normal"
+=======
+        },
+        {
+          "type": "frame",
+          "id": "WKA4A",
+          "name": "Application Layer",
+          "width": "fill_container",
+          "fill": "$bg_api",
+          "cornerRadius": 8,
+          "stroke": {
+            "thickness": 1,
+            "fill": "#4CAF50"
+          },
+          "layout": "vertical",
+          "gap": 16,
+          "padding": 24,
+          "children": [
+            {
+              "type": "text",
+              "id": "CxKK8",
+              "name": "apiTitle",
+              "fill": "#2E7D32",
+              "content": "Backend (NestJS API)",
+              "fontFamily": "Inter",
+              "fontSize": 20,
+              "fontWeight": "bold"
+            },
+            {
+              "type": "frame",
+              "id": "dYOgs",
+              "name": "apiGrid",
+              "width": "fill_container",
+              "gap": 16,
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "zYdcZ",
+                  "name": "Detection",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 4,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#4CAF50"
+                  },
+                  "layout": "vertical",
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Tubo8",
+                      "name": "detectText",
+                      "fill": "#333333",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Detection Module\n• 定期拉取传感器数据\n• 规则引擎初步判断\n• 异常触发分析流水线",
+                      "textAlign": "center",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "lRFog",
+                  "name": "AI Agent",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 4,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#4CAF50"
+                  },
+                  "layout": "vertical",
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "w7ZhI",
+                      "name": "agentText",
+                      "fill": "#333333",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "AI Agent Module\n• 智能分析异常原因\n• 调用 LLM 进行深度诊断\n• 生成处理建议",
+                      "textAlign": "center",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "puHhS",
+                  "name": "Alert",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 4,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#4CAF50"
+                  },
+                  "layout": "vertical",
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "YPNGN",
+                      "name": "alertText",
+                      "fill": "#333333",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Alert Module\n• 实时推送告警\n• WebSocket 管理\n• 多端订阅支持",
+                      "textAlign": "center",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+>>>>>>> 7fd82e3919c699fcdfec3153cff017f045035a22
                 }
               ]
             }
           ]
+<<<<<<< HEAD
         }
       ]
     },
@@ -483,11 +724,49 @@
                   "fontFamily": "Inter",
                   "fontSize": 12,
                   "fontWeight": "normal"
+=======
+        },
+        {
+          "type": "frame",
+          "id": "iUUze",
+          "name": "Integration & Data Layer",
+          "width": "fill_container",
+          "gap": 20,
+          "children": [
+            {
+              "type": "frame",
+              "id": "ZnZoT",
+              "name": "Database",
+              "width": "fill_container",
+              "fill": "$bg_db",
+              "cornerRadius": 8,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#F57C00"
+              },
+              "layout": "vertical",
+              "padding": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "57lPl",
+                  "name": "dbText",
+                  "fill": "#E65100",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "SQL Database\n(Sensor Data & Alerts)",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "bold"
+>>>>>>> 7fd82e3919c699fcdfec3153cff017f045035a22
                 }
               ]
             },
             {
               "type": "frame",
+<<<<<<< HEAD
               "id": "Zr5iq",
               "name": "llm",
               "width": "fill_container",
@@ -595,11 +874,39 @@
                   "fontFamily": "Inter",
                   "fontSize": 12,
                   "fontWeight": "normal"
+=======
+              "id": "wOOd6",
+              "name": "Redis",
+              "width": "fill_container",
+              "fill": "#FFEBEE",
+              "cornerRadius": 8,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D32F2F"
+              },
+              "layout": "vertical",
+              "padding": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "MFI7E",
+                  "name": "redisText",
+                  "fill": "#C62828",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Redis\n(Pub/Sub & Cache)",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "bold"
+>>>>>>> 7fd82e3919c699fcdfec3153cff017f045035a22
                 }
               ]
             },
             {
               "type": "frame",
+<<<<<<< HEAD
               "id": "Uq9jk",
               "name": "redis",
               "width": "fill_container",
@@ -673,6 +980,33 @@
                   "fontFamily": "Inter",
                   "fontSize": 12,
                   "fontWeight": "normal"
+=======
+              "id": "P7Soh",
+              "name": "LLM",
+              "width": "fill_container",
+              "fill": "$bg_ext",
+              "cornerRadius": 8,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#7B1FA2"
+              },
+              "layout": "vertical",
+              "padding": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "vRQ2h",
+                  "name": "llmText",
+                  "fill": "#4A148C",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "External LLM\n(OpenAI/DeepSeek API)",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "bold"
+>>>>>>> 7fd82e3919c699fcdfec3153cff017f045035a22
                 }
               ]
             }
@@ -681,6 +1015,7 @@
       ]
     },
     {
+<<<<<<< HEAD
       "type": "frame",
       "id": "t0uod",
       "x": 100,
@@ -1309,4 +1644,42 @@
       "fontWeight": "normal"
     }
   ]
+=======
+      "id": "HoMwI",
+      "type": "connection",
+      "x": 0,
+      "y": 0,
+      "source": {
+        "path": "sDNAX",
+        "anchor": "bottom"
+      },
+      "target": {
+        "path": "WKA4A",
+        "anchor": "top"
+      }
+    }
+  ],
+  "variables": {
+    "bg_api": {
+      "type": "color",
+      "value": "#E8F5E9"
+    },
+    "bg_db": {
+      "type": "color",
+      "value": "#FFF3E0"
+    },
+    "bg_ext": {
+      "type": "color",
+      "value": "#F3E5F5"
+    },
+    "bg_web": {
+      "type": "color",
+      "value": "#E3F2FD"
+    },
+    "primary": {
+      "type": "color",
+      "value": "#1976D2"
+    }
+  }
+>>>>>>> 7fd82e3919c699fcdfec3153cff017f045035a22
 }
