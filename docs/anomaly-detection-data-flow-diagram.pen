@@ -1,0 +1,2085 @@
+{
+  "version": "2.8",
+  "children": [
+    {
+      "type": "frame",
+      "id": "bi8Au",
+      "x": 0,
+      "y": 0,
+      "name": "Frame",
+      "clip": true,
+      "width": 800,
+      "height": 600,
+      "fill": "#FFFFFF",
+      "layout": "none"
+    },
+    {
+      "type": "frame",
+      "id": "lWY7S",
+      "x": 100,
+      "y": 100,
+      "name": "BDI Multi-Agent Architecture",
+      "width": 1400,
+      "height": 1000,
+      "fill": "#FCFCFA",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "EDJQO",
+          "x": 50,
+          "y": 40,
+          "name": "title",
+          "fill": "#0D0D0D",
+          "content": "BDI多Agent协作架构",
+          "fontFamily": "Inter",
+          "fontSize": 48,
+          "letterSpacing": -1
+        },
+        {
+          "type": "text",
+          "id": "7UQEx",
+          "x": 50,
+          "y": 100,
+          "name": "subtitle",
+          "fill": "#666666",
+          "content": "燃气调压器异常检测系统",
+          "fontFamily": "Inter",
+          "fontSize": 22,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "zf9af",
+          "x": 50,
+          "y": 180,
+          "name": "BDI Model",
+          "width": 400,
+          "height": 280,
+          "fill": "#FFFFFF",
+          "stroke": {
+            "thickness": 2,
+            "fill": "#E5E5E5"
+          },
+          "layout": "vertical",
+          "gap": 20,
+          "padding": 32,
+          "children": [
+            {
+              "type": "text",
+              "id": "GThIN",
+              "name": "bdiTitle",
+              "fill": "#0D0D0D",
+              "content": "BDI模型架构",
+              "fontFamily": "Inter",
+              "fontSize": 22,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "ski4l",
+              "name": "beliefBox",
+              "width": "fill_container",
+              "height": 60,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 6,
+              "padding": [
+                12,
+                16
+              ],
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "bO8WK",
+                  "name": "beliefLabel",
+                  "fill": "#0D0D0D",
+                  "content": "信念层 (Belief)",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "r5zxy",
+                  "name": "beliefDesc",
+                  "fill": "#666666",
+                  "content": "设备状态 · 历史模式 · 领域知识",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "2X5Ho",
+              "name": "desireBox",
+              "width": "fill_container",
+              "height": 60,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 6,
+              "padding": [
+                12,
+                16
+              ],
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "myp8p",
+                  "name": "desireLabel",
+                  "fill": "#0D0D0D",
+                  "content": "愿望层 (Desire)",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "TRfk5",
+                  "name": "desireDesc",
+                  "fill": "#666666",
+                  "content": "保障安全 · 预防故障 · 优化运维",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Ho8wo",
+              "name": "intentionBox",
+              "width": "fill_container",
+              "height": 60,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 6,
+              "padding": [
+                12,
+                16
+              ],
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "k5GNU",
+                  "name": "intentionLabel",
+                  "fill": "#0D0D0D",
+                  "content": "意图层 (Intention)",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "ejwmP",
+                  "name": "intentionDesc",
+                  "fill": "#666666",
+                  "content": "监测 · 分析 · 预警 · 执行",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "aZNMm",
+          "x": 500,
+          "y": 180,
+          "name": "Multi-Agent System",
+          "width": 850,
+          "height": 700,
+          "fill": "#FFFFFF",
+          "stroke": {
+            "thickness": 2,
+            "fill": "#E5E5E5"
+          },
+          "layout": "vertical",
+          "gap": 24,
+          "padding": 32,
+          "children": [
+            {
+              "type": "text",
+              "id": "uueM8",
+              "name": "agentsTitle",
+              "fill": "#0D0D0D",
+              "content": "多Agent协作系统",
+              "fontFamily": "Inter",
+              "fontSize": 22,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "3EuxI",
+              "name": "agentsGrid",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "PG9s4",
+                  "name": "row1",
+                  "width": "fill_container",
+                  "gap": 20,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "MVPYL",
+                      "name": "monitorAgent",
+                      "width": "fill_container",
+                      "height": 140,
+                      "fill": "#F5F5F5",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 0,
+                        "fill": "#DC2626"
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "l6p9T",
+                          "name": "monitorIcon",
+                          "width": 24,
+                          "height": 24,
+                          "iconFontName": "activity",
+                          "iconFontFamily": "lucide",
+                          "fill": "#DC2626"
+                        },
+                        {
+                          "type": "text",
+                          "id": "GevHz",
+                          "name": "monitorTitle",
+                          "fill": "#0D0D0D",
+                          "content": "监测Agent",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "500"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Bft5T",
+                          "name": "monitorDesc",
+                          "fill": "#666666",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "数据采集\n质量检查\n实时监控",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "cd8Qy",
+                      "name": "analysisAgent",
+                      "width": "fill_container",
+                      "height": 140,
+                      "fill": "#F5F5F5",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 0,
+                        "fill": "#DC2626"
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "biHah",
+                          "name": "analysisIcon",
+                          "width": 24,
+                          "height": 24,
+                          "iconFontName": "search",
+                          "iconFontFamily": "lucide",
+                          "fill": "#DC2626"
+                        },
+                        {
+                          "type": "text",
+                          "id": "eKXMZ",
+                          "name": "analysisTitle",
+                          "fill": "#0D0D0D",
+                          "content": "分析Agent",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "500"
+                        },
+                        {
+                          "type": "text",
+                          "id": "7Z2Xk",
+                          "name": "analysisDesc",
+                          "fill": "#666666",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "异常检测\n根因分析\n模式识别",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "bNF9u",
+                  "name": "row2",
+                  "width": "fill_container",
+                  "gap": 20,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "4Cc2i",
+                      "name": "decisionAgent",
+                      "width": "fill_container",
+                      "height": 140,
+                      "fill": "#F5F5F5",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 0,
+                        "fill": "#DC2626"
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "E32f9",
+                          "name": "decisionIcon",
+                          "width": 24,
+                          "height": 24,
+                          "iconFontName": "brain",
+                          "iconFontFamily": "lucide",
+                          "fill": "#DC2626"
+                        },
+                        {
+                          "type": "text",
+                          "id": "bV3Hj",
+                          "name": "decisionTitle",
+                          "fill": "#0D0D0D",
+                          "content": "决策Agent",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "500"
+                        },
+                        {
+                          "type": "text",
+                          "id": "UnYju",
+                          "name": "decisionDesc",
+                          "fill": "#666666",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "风险评估\n策略制定\n优先级排序",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "S5GIC",
+                      "name": "learningAgent",
+                      "width": "fill_container",
+                      "height": 140,
+                      "fill": "#F5F5F5",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 0,
+                        "fill": "#DC2626"
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "vAi7e",
+                          "name": "learningIcon",
+                          "width": 24,
+                          "height": 24,
+                          "iconFontName": "graduation-cap",
+                          "iconFontFamily": "lucide",
+                          "fill": "#DC2626"
+                        },
+                        {
+                          "type": "text",
+                          "id": "CQwmv",
+                          "name": "learningTitle",
+                          "fill": "#0D0D0D",
+                          "content": "学习Agent",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "500"
+                        },
+                        {
+                          "type": "text",
+                          "id": "s62wo",
+                          "name": "learningDesc",
+                          "fill": "#666666",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "历史学习\n模型优化\n知识积累",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "d9V84",
+                  "name": "row3",
+                  "width": "fill_container",
+                  "gap": 20,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "zKy7x",
+                      "name": "notifyAgent",
+                      "width": "fill_container",
+                      "height": 140,
+                      "fill": "#F5F5F5",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 0,
+                        "fill": "#DC2626"
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "LGqMD",
+                          "name": "notifyIcon",
+                          "width": 24,
+                          "height": 24,
+                          "iconFontName": "bell",
+                          "iconFontFamily": "lucide",
+                          "fill": "#DC2626"
+                        },
+                        {
+                          "type": "text",
+                          "id": "NgG3I",
+                          "name": "notifyTitle",
+                          "fill": "#0D0D0D",
+                          "content": "通知Agent",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "500"
+                        },
+                        {
+                          "type": "text",
+                          "id": "K9QTZ",
+                          "name": "notifyDesc",
+                          "fill": "#666666",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "预警推送\n报告生成\n信息分发",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "uW2YH",
+                      "name": "feedbackAgent",
+                      "width": "fill_container",
+                      "height": 140,
+                      "fill": "#F5F5F5",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 0,
+                        "fill": "#DC2626"
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "GU4HA",
+                          "name": "feedbackIcon",
+                          "width": 24,
+                          "height": 24,
+                          "iconFontName": "refresh-cw",
+                          "iconFontFamily": "lucide",
+                          "fill": "#DC2626"
+                        },
+                        {
+                          "type": "text",
+                          "id": "UKcZ6",
+                          "name": "feedbackTitle",
+                          "fill": "#0D0D0D",
+                          "content": "反馈Agent",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "500"
+                        },
+                        {
+                          "type": "text",
+                          "id": "LQ9kB",
+                          "name": "feedbackDesc",
+                          "fill": "#666666",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "运维反馈\n效果评估\n闭环优化",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "line",
+          "id": "fQyRp",
+          "x": 450,
+          "y": 250,
+          "name": "arrow1",
+          "width": 50,
+          "height": 0,
+          "stroke": {
+            "thickness": 2,
+            "cap": "square",
+            "fill": "#DC2626"
+          }
+        },
+        {
+          "type": "line",
+          "id": "Ij9HQ",
+          "x": 450,
+          "y": 320,
+          "name": "arrow2",
+          "width": 50,
+          "height": 0,
+          "stroke": {
+            "thickness": 2,
+            "cap": "square",
+            "fill": "#DC2626"
+          }
+        },
+        {
+          "type": "line",
+          "id": "YT8uB",
+          "x": 450,
+          "y": 390,
+          "name": "arrow3",
+          "width": 50,
+          "height": 0,
+          "stroke": {
+            "thickness": 2,
+            "cap": "square",
+            "fill": "#DC2626"
+          }
+        },
+        {
+          "type": "text",
+          "id": "FEtOX",
+          "x": 80,
+          "y": 480,
+          "name": "flowLabel1",
+          "fill": "#666666",
+          "content": "数据流",
+          "fontFamily": "Inter",
+          "fontSize": 13,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "line",
+          "id": "dWowl",
+          "x": 140,
+          "y": 488,
+          "name": "flowArrow1",
+          "width": 30,
+          "height": 0,
+          "stroke": {
+            "thickness": 2,
+            "cap": "square",
+            "fill": "#DC2626"
+          }
+        },
+        {
+          "type": "text",
+          "id": "MvRde",
+          "x": 200,
+          "y": 480,
+          "name": "flowLabel2",
+          "fill": "#666666",
+          "content": "协作流",
+          "fontFamily": "Inter",
+          "fontSize": 13,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "line",
+          "id": "qManZ",
+          "x": 260,
+          "y": 488,
+          "name": "flowArrow2",
+          "width": 30,
+          "height": 0,
+          "stroke": {
+            "thickness": 2,
+            "cap": "square",
+            "fill": "#999999"
+          }
+        },
+        {
+          "type": "text",
+          "id": "PbGbV",
+          "x": 320,
+          "y": 480,
+          "name": "flowLabel3",
+          "fill": "#666666",
+          "content": "反馈流",
+          "fontFamily": "Inter",
+          "fontSize": 13,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "line",
+          "id": "x1irP",
+          "x": 380,
+          "y": 488,
+          "name": "flowArrow3",
+          "width": 30,
+          "height": 0,
+          "stroke": {
+            "thickness": 2,
+            "cap": "square",
+            "fill": "#22C55E"
+          }
+        },
+        {
+          "type": "line",
+          "id": "4eQfs",
+          "x": 650,
+          "y": 380,
+          "name": "collabLine1",
+          "width": 150,
+          "height": 0,
+          "stroke": {
+            "thickness": 2,
+            "cap": "square",
+            "fill": "#999999"
+          }
+        },
+        {
+          "type": "line",
+          "id": "7W3Fs",
+          "x": 900,
+          "y": 380,
+          "name": "collabLine2",
+          "width": 150,
+          "height": 0,
+          "stroke": {
+            "thickness": 2,
+            "cap": "square",
+            "fill": "#999999"
+          }
+        },
+        {
+          "type": "line",
+          "id": "yyOct",
+          "x": 650,
+          "y": 540,
+          "name": "collabLine3",
+          "width": 150,
+          "height": 0,
+          "stroke": {
+            "thickness": 2,
+            "cap": "square",
+            "fill": "#999999"
+          }
+        },
+        {
+          "type": "line",
+          "id": "4G6Qb",
+          "x": 900,
+          "y": 540,
+          "name": "collabLine4",
+          "width": 150,
+          "height": 0,
+          "stroke": {
+            "thickness": 2,
+            "cap": "square",
+            "fill": "#999999"
+          }
+        },
+        {
+          "type": "path",
+          "id": "jxVHm",
+          "x": 1100,
+          "y": 700,
+          "name": "feedbackLoop",
+          "geometry": "M0 0l200 0 0 150-200 0",
+          "fill": "none",
+          "width": 200,
+          "height": 150,
+          "stroke": {
+            "thickness": 2,
+            "cap": "square",
+            "fill": "#22C55E"
+          }
+        },
+        {
+          "type": "text",
+          "id": "CBqI0",
+          "x": 1150,
+          "y": 860,
+          "name": "loopLabel",
+          "fill": "#22C55E",
+          "content": "持续优化循环",
+          "fontFamily": "Inter",
+          "fontSize": 12,
+          "fontWeight": "normal"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "CuwyP",
+      "x": 100,
+      "y": 1200,
+      "name": "Technical Roadmap",
+      "width": 1600,
+      "height": 900,
+      "fill": "#FCFCFA",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "z1BX8",
+          "x": 50,
+          "y": 40,
+          "name": "roadmapTitle",
+          "fill": "#0D0D0D",
+          "content": "技术实施路线图",
+          "fontFamily": "Inter",
+          "fontSize": 48,
+          "letterSpacing": -1
+        },
+        {
+          "type": "text",
+          "id": "YEMHT",
+          "x": 50,
+          "y": 100,
+          "name": "roadmapSubtitle",
+          "fill": "#666666",
+          "content": "从需求到部署的完整开发流程",
+          "fontFamily": "Inter",
+          "fontSize": 22,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "line",
+          "id": "1y5h8",
+          "x": 100,
+          "y": 220,
+          "name": "timeline",
+          "width": 1400,
+          "height": 0,
+          "stroke": {
+            "thickness": 3,
+            "fill": "#DC2626"
+          }
+        },
+        {
+          "type": "frame",
+          "id": "u7bYT",
+          "x": 80,
+          "y": 260,
+          "name": "phase1Container",
+          "width": 220,
+          "height": 480,
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "GFUJx",
+              "name": "phase1Box",
+              "width": "fill_container",
+              "height": 100,
+              "fill": "#FFFFFF",
+              "stroke": {
+                "thickness": 2,
+                "fill": "#E5E5E5"
+              },
+              "layout": "vertical",
+              "gap": 8,
+              "padding": 20,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cmZ37",
+                  "name": "phase1Title",
+                  "fill": "#0D0D0D",
+                  "content": "需求分析",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "ZrsN0",
+                  "name": "phase1Icon",
+                  "width": 28,
+                  "height": 28,
+                  "iconFontName": "clipboard-list",
+                  "iconFontFamily": "lucide",
+                  "fill": "#DC2626"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "3CIUt",
+              "name": "phase1Item1",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "wWFV3",
+                  "name": "phase1Label1",
+                  "fill": "#0D0D0D",
+                  "content": "功能需求",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "ypH1y",
+                  "name": "phase1Desc1",
+                  "fill": "#666666",
+                  "content": "系统功能定义",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "5TVYI",
+              "name": "phase1Item2",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "VyLyx",
+                  "name": "phase1Label2",
+                  "fill": "#0D0D0D",
+                  "content": "性能需求",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "2zAwr",
+                  "name": "phase1Desc2",
+                  "fill": "#666666",
+                  "content": "响应时间与吞吐量",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Ajewa",
+              "name": "phase1Item3",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "FBvZQ",
+                  "name": "phase1Label3",
+                  "fill": "#0D0D0D",
+                  "content": "安全需求",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "2H3rh",
+                  "name": "phase1Desc3",
+                  "fill": "#666666",
+                  "content": "数据安全与访问控制",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ellipse",
+          "id": "g5DF2",
+          "x": 190,
+          "y": 210,
+          "name": "phase1Dot",
+          "fill": "#DC2626",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "type": "path",
+          "id": "sOv4O",
+          "x": 300,
+          "y": 300,
+          "name": "arrow1",
+          "geometry": "M0 30l30 0-10-10m10 10l-10 10",
+          "fill": "none",
+          "width": 30,
+          "height": 60,
+          "stroke": {
+            "thickness": 2,
+            "fill": "#DC2626"
+          }
+        },
+        {
+          "type": "frame",
+          "id": "a5nEz",
+          "x": 330,
+          "y": 260,
+          "name": "phase2Container",
+          "width": 220,
+          "height": 480,
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "IGQu5",
+              "name": "phase2Box",
+              "width": "fill_container",
+              "height": 100,
+              "fill": "#FFFFFF",
+              "stroke": {
+                "thickness": 2,
+                "fill": "#E5E5E5"
+              },
+              "layout": "vertical",
+              "gap": 8,
+              "padding": 20,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "f1mgE",
+                  "name": "phase2Title",
+                  "fill": "#0D0D0D",
+                  "content": "架构设计",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "cUA44",
+                  "name": "phase2Icon",
+                  "width": 28,
+                  "height": 28,
+                  "iconFontName": "box",
+                  "iconFontFamily": "lucide",
+                  "fill": "#DC2626"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "7hE58",
+              "name": "phase2Item1",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "NBTbl",
+                  "name": "phase2Label1",
+                  "fill": "#0D0D0D",
+                  "content": "Agent架构",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "ufEkd",
+                  "name": "phase2Desc1",
+                  "fill": "#666666",
+                  "content": "BDI模型与多Agent设计",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "jda3e",
+              "name": "phase2Item2",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "OEi2z",
+                  "name": "phase2Label2",
+                  "fill": "#0D0D0D",
+                  "content": "数据流设计",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "re6U6",
+                  "name": "phase2Desc2",
+                  "fill": "#666666",
+                  "content": "实时数据处理流程",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "drncG",
+              "name": "phase2Item3",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "qluGS",
+                  "name": "phase2Label3",
+                  "fill": "#0D0D0D",
+                  "content": "接口设计",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "3AWTD",
+                  "name": "phase2Desc3",
+                  "fill": "#666666",
+                  "content": "RESTful API与WebSocket",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ellipse",
+          "id": "wn9zZ",
+          "x": 430,
+          "y": 210,
+          "name": "phase2Dot",
+          "fill": "#DC2626",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "type": "path",
+          "id": "64cZw",
+          "x": 550,
+          "y": 300,
+          "name": "arrow2",
+          "geometry": "M0 30l30 0-10-10m10 10l-10 10",
+          "fill": "none",
+          "width": 30,
+          "height": 60,
+          "stroke": {
+            "thickness": 2,
+            "fill": "#DC2626"
+          }
+        },
+        {
+          "type": "frame",
+          "id": "khb3J",
+          "x": 580,
+          "y": 260,
+          "name": "phase3Container",
+          "width": 220,
+          "height": 480,
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "xHUEC",
+              "name": "phase3Box",
+              "width": "fill_container",
+              "height": 100,
+              "fill": "#FFFFFF",
+              "stroke": {
+                "thickness": 2,
+                "fill": "#E5E5E5"
+              },
+              "layout": "vertical",
+              "gap": 8,
+              "padding": 20,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "UTyG0",
+                  "name": "phase3Title",
+                  "fill": "#0D0D0D",
+                  "content": "核心算法实现",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "kzLgS",
+                  "name": "phase3Icon",
+                  "width": 28,
+                  "height": 28,
+                  "iconFontName": "cpu",
+                  "iconFontFamily": "lucide",
+                  "fill": "#DC2626"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "gEwJu",
+              "name": "phase3Item1",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "xD0LT",
+                  "name": "phase3Label1",
+                  "fill": "#0D0D0D",
+                  "content": "异常检测算法",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "2kifn",
+                  "name": "phase3Desc1",
+                  "fill": "#666666",
+                  "content": "统计与机器学习方法",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "iecPh",
+              "name": "phase3Item2",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cLdXZ",
+                  "name": "phase3Label2",
+                  "fill": "#0D0D0D",
+                  "content": "根因分析算法",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "pmNYl",
+                  "name": "phase3Desc2",
+                  "fill": "#666666",
+                  "content": "因果推理与关联分析",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "yZujW",
+              "name": "phase3Item3",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cTegF",
+                  "name": "phase3Label3",
+                  "fill": "#0D0D0D",
+                  "content": "学习机制",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "ZJEeo",
+                  "name": "phase3Desc3",
+                  "fill": "#666666",
+                  "content": "在线学习与模型更新",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ellipse",
+          "id": "pVIoI",
+          "x": 680,
+          "y": 210,
+          "name": "phase3Dot",
+          "fill": "#DC2626",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "type": "path",
+          "id": "vYWmW",
+          "x": 800,
+          "y": 300,
+          "name": "arrow3",
+          "geometry": "M0 30l30 0-10-10m10 10l-10 10",
+          "fill": "none",
+          "width": 30,
+          "height": 60,
+          "stroke": {
+            "thickness": 2,
+            "fill": "#DC2626"
+          }
+        },
+        {
+          "type": "frame",
+          "id": "exF2R",
+          "x": 830,
+          "y": 260,
+          "name": "phase4Container",
+          "width": 220,
+          "height": 480,
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "axcRm",
+              "name": "phase4Box",
+              "width": "fill_container",
+              "height": 100,
+              "fill": "#FFFFFF",
+              "stroke": {
+                "thickness": 2,
+                "fill": "#E5E5E5"
+              },
+              "layout": "vertical",
+              "gap": 8,
+              "padding": 20,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cQXaI",
+                  "name": "phase4Title",
+                  "fill": "#0D0D0D",
+                  "content": "系统集成",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "S7Lc8",
+                  "name": "phase4Icon",
+                  "width": 28,
+                  "height": 28,
+                  "iconFontName": "layers",
+                  "iconFontFamily": "lucide",
+                  "fill": "#DC2626"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "YYbcE",
+              "name": "phase4Item1",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ZzyYF",
+                  "name": "phase4Label1",
+                  "fill": "#0D0D0D",
+                  "content": "前后端开发",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "XKE6d",
+                  "name": "phase4Desc1",
+                  "fill": "#666666",
+                  "content": "React + NestJS实现",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "2Em03",
+              "name": "phase4Item2",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "nCdBr",
+                  "name": "phase4Label2",
+                  "fill": "#0D0D0D",
+                  "content": "数据库集成",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "bBl05",
+                  "name": "phase4Desc2",
+                  "fill": "#666666",
+                  "content": "PostgreSQL + Redis",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "8MZou",
+              "name": "phase4Item3",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "7aNGl",
+                  "name": "phase4Label3",
+                  "fill": "#0D0D0D",
+                  "content": "Agent编排",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "IM2u7",
+                  "name": "phase4Desc3",
+                  "fill": "#666666",
+                  "content": "多Agent协作实现",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ellipse",
+          "id": "xY0vU",
+          "x": 930,
+          "y": 210,
+          "name": "phase4Dot",
+          "fill": "#DC2626",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "type": "path",
+          "id": "9lV68",
+          "x": 1050,
+          "y": 300,
+          "name": "arrow4",
+          "geometry": "M0 30l30 0-10-10m10 10l-10 10",
+          "fill": "none",
+          "width": 30,
+          "height": 60,
+          "stroke": {
+            "thickness": 2,
+            "fill": "#DC2626"
+          }
+        },
+        {
+          "type": "frame",
+          "id": "uVw5s",
+          "x": 1080,
+          "y": 260,
+          "name": "phase5Container",
+          "width": 220,
+          "height": 480,
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "BMjfa",
+              "name": "phase5Box",
+              "width": "fill_container",
+              "height": 100,
+              "fill": "#FFFFFF",
+              "stroke": {
+                "thickness": 2,
+                "fill": "#E5E5E5"
+              },
+              "layout": "vertical",
+              "gap": 8,
+              "padding": 20,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "lYc63",
+                  "name": "phase5Title",
+                  "fill": "#0D0D0D",
+                  "content": "测试优化",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "3hJeg",
+                  "name": "phase5Icon",
+                  "width": 28,
+                  "height": 28,
+                  "iconFontName": "check",
+                  "iconFontFamily": "lucide",
+                  "fill": "#DC2626"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "mcFle",
+              "name": "phase5Item1",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "QzofG",
+                  "name": "phase5Label1",
+                  "fill": "#0D0D0D",
+                  "content": "性能测试",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "3wwYX",
+                  "name": "phase5Desc1",
+                  "fill": "#666666",
+                  "content": "负载与压力测试",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Y5oVE",
+              "name": "phase5Item2",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "YveUr",
+                  "name": "phase5Label2",
+                  "fill": "#0D0D0D",
+                  "content": "功能测试",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "qdTc4",
+                  "name": "phase5Desc2",
+                  "fill": "#666666",
+                  "content": "单元与集成测试",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "GAuPE",
+              "name": "phase5Item3",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "kvxpx",
+                  "name": "phase5Label3",
+                  "fill": "#0D0D0D",
+                  "content": "用户测试",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "TYxXC",
+                  "name": "phase5Desc3",
+                  "fill": "#666666",
+                  "content": "可用性与体验测试",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ellipse",
+          "id": "W9SdP",
+          "x": 1180,
+          "y": 210,
+          "name": "phase5Dot",
+          "fill": "#DC2626",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "type": "path",
+          "id": "04gbz",
+          "x": 1300,
+          "y": 300,
+          "name": "arrow5",
+          "geometry": "M0 30l30 0-10-10m10 10l-10 10",
+          "fill": "none",
+          "width": 30,
+          "height": 60,
+          "stroke": {
+            "thickness": 2,
+            "fill": "#DC2626"
+          }
+        },
+        {
+          "type": "frame",
+          "id": "IZOo4",
+          "x": 1330,
+          "y": 260,
+          "name": "phase6Container",
+          "width": 220,
+          "height": 480,
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "oaRbi",
+              "name": "phase6Box",
+              "width": "fill_container",
+              "height": 100,
+              "fill": "#FFFFFF",
+              "stroke": {
+                "thickness": 2,
+                "fill": "#E5E5E5"
+              },
+              "layout": "vertical",
+              "gap": 8,
+              "padding": 20,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cmAWc",
+                  "name": "phase6Title",
+                  "fill": "#0D0D0D",
+                  "content": "部署应用",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "WVDE3",
+                  "name": "phase6Icon",
+                  "width": 28,
+                  "height": 28,
+                  "iconFontName": "rocket",
+                  "iconFontFamily": "lucide",
+                  "fill": "#DC2626"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "FG4dO",
+              "name": "phase6Item1",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "zUCeD",
+                  "name": "phase6Label1",
+                  "fill": "#0D0D0D",
+                  "content": "生产部署",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "sM4UJ",
+                  "name": "phase6Desc1",
+                  "fill": "#666666",
+                  "content": "Docker容器化部署",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "3HffD",
+              "name": "phase6Item2",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "COf0i",
+                  "name": "phase6Label2",
+                  "fill": "#0D0D0D",
+                  "content": "运维监控",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "GdVjm",
+                  "name": "phase6Desc2",
+                  "fill": "#666666",
+                  "content": "日志与性能监控",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "uDXpk",
+              "name": "phase6Item3",
+              "width": "fill_container",
+              "height": 90,
+              "fill": "#F5F5F5",
+              "stroke": {
+                "align": "inside",
+                "thickness": 0,
+                "fill": "#DC2626"
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "JWz5w",
+                  "name": "phase6Label3",
+                  "fill": "#0D0D0D",
+                  "content": "持续优化",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "Sf83H",
+                  "name": "phase6Desc3",
+                  "fill": "#666666",
+                  "content": "迭代改进与升级",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ellipse",
+          "id": "nyZPB",
+          "x": 1430,
+          "y": 210,
+          "name": "phase6Dot",
+          "fill": "#DC2626",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "type": "path",
+          "id": "Yh08j",
+          "x": 1500,
+          "y": 400,
+          "name": "feedbackArrow",
+          "geometry": "M0 0l80 0 0 200-80 0",
+          "fill": "none",
+          "width": 80,
+          "height": 200,
+          "stroke": {
+            "thickness": 2,
+            "fill": "#22C55E"
+          }
+        },
+        {
+          "type": "text",
+          "id": "I4r8L",
+          "x": 1510,
+          "y": 490,
+          "name": "feedbackLabel",
+          "rotation": 90,
+          "fill": "#22C55E",
+          "content": "反馈循环",
+          "fontFamily": "Inter",
+          "fontSize": 13,
+          "fontWeight": "500"
+        },
+        {
+          "type": "frame",
+          "id": "PusJd",
+          "x": 80,
+          "y": 780,
+          "name": "legendBox",
+          "width": 500,
+          "height": 80,
+          "fill": "#FFFFFF",
+          "stroke": {
+            "thickness": 2,
+            "fill": "#E5E5E5"
+          },
+          "gap": 40,
+          "padding": 20,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "BifuQ",
+              "name": "legend1",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "line",
+                  "id": "erV76",
+                  "name": "legend1Line",
+                  "width": 30,
+                  "height": 0,
+                  "stroke": {
+                    "thickness": 2,
+                    "fill": "#DC2626"
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "X4x8V",
+                  "name": "legend1Text",
+                  "fill": "#666666",
+                  "content": "主流程",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "smGK4",
+              "name": "legend2",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "line",
+                  "id": "dIlDi",
+                  "name": "legend2Line",
+                  "width": 30,
+                  "height": 0,
+                  "stroke": {
+                    "thickness": 2,
+                    "fill": "#22C55E"
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "epJ98",
+                  "name": "legend2Text",
+                  "fill": "#666666",
+                  "content": "反馈优化",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
