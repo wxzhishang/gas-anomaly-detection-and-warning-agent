@@ -14,8 +14,8 @@ import {
 import { RootCauseResult } from '../../common/types/analysis.types';
 
 /**
- * 预警服务
- * 负责预警生成、等级判定、存储和查询
+ * 异常服务
+ * 负责异常生成、等级判定、存储和查询
  */
 @Injectable()
 export class AlertService {
@@ -36,7 +36,7 @@ export class AlertService {
 
   /**
    * 更新设备状态
-   * 根据预警等级更新设备状态
+   * 根据异常等级更新设备状态
    */
   private async updateDeviceStatus(deviceId: string, alertLevel: AlertLevel): Promise<void> {
     const status = alertLevel === AlertLevel.CRITICAL ? 'critical' : 'warning';
@@ -51,18 +51,18 @@ export class AlertService {
       this.logger.log(`Updated device ${deviceId} status to ${status}`);
     } catch (error: any) {
       this.logger.error(`Failed to update device status: ${error.message}`, error.stack);
-      // 不抛出错误，避免影响预警创建
+      // 不抛出错误，避免影响异常创建
     }
   }
 
   /**
-   * 创建预警
-   * 根据异常检测结果和根因分析结果生成预警记录
+   * 创建异常
+   * 根据异常检测结果和根因分析结果生成异常记录
    * 
    * @param deviceId 设备ID
    * @param anomalyResult 异常检测结果
    * @param rootCause 根因分析结果
-   * @returns 创建的预警记录
+   * @returns 创建的异常记录
    */
   async createAlert(
     deviceId: string,
@@ -70,10 +70,10 @@ export class AlertService {
     rootCause: RootCauseResult,
   ): Promise<Alert> {
     try {
-      // 判定预警等级
+      // 判定异常等级
       const level = this.determineAlertLevel(anomalyResult.anomalies);
 
-      // 生成预警消息
+      // 生成异常消息
       const message = this.generateAlertMessage(anomalyResult.anomalies, rootCause);
 
       // 存储到数据库
@@ -123,11 +123,11 @@ export class AlertService {
   }
 
   /**
-   * 判定预警等级
+   * 判定异常等级
    * 规则：异常指标数量>2 或 最大Z-Score>5 则为严重，否则为警告
    * 
    * @param anomalies 异常列表
-   * @returns 预警等级
+   * @returns 异常等级
    */
   determineAlertLevel(anomalies: Anomaly[]): AlertLevel {
     if (anomalies.length === 0) {
@@ -145,11 +145,11 @@ export class AlertService {
   }
 
   /**
-   * 生成预警消息
+   * 生成异常消息
    * 
    * @param anomalies 异常列表
    * @param rootCause 根因分析结果
-   * @returns 预警消息文本
+   * @returns 异常消息文本
    */
   private generateAlertMessage(
     anomalies: Anomaly[],
@@ -171,21 +171,21 @@ export class AlertService {
   }
 
   /**
-   * 推送预警
-   * 通过WebSocket广播预警到所有连接的客户端
+   * 推送异常
+   * 通过WebSocket广播异常到所有连接的客户端
    * 
-   * @param alert 预警记录
+   * @param alert 异常记录
    */
   async pushAlert(alert: Alert): Promise<void> {
     this.logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
     this.logger.log(`📤 pushAlert 被调用`);
-    this.logger.log(`   预警ID: ${alert.id}`);
+    this.logger.log(`   异常ID: ${alert.id}`);
     this.logger.log(`   设备: ${alert.deviceId}`);
     this.logger.log(`   alertGateway 是否存在: ${!!this.alertGateway}`);
     
     if (this.alertGateway) {
       this.alertGateway.broadcastAlert(alert);
-      this.logger.log(`✅ 预警 ${alert.id} 已通过 WebSocket 推送`);
+      this.logger.log(`✅ 异常 ${alert.id} 已通过 WebSocket 推送`);
     } else {
       this.logger.warn('❌ AlertGateway 未初始化，跳过推送');
     }
@@ -193,11 +193,11 @@ export class AlertService {
   }
 
   /**
-   * 查询预警历史
-   * 支持按设备ID、预警等级、时间范围查询
+   * 查询异常历史
+   * 支持按设备ID、异常等级、时间范围查询
    * 
    * @param params 查询参数
-   * @returns 预警列表
+   * @returns 异常列表
    */
   async queryAlerts(params: AlertQueryParams = {}): Promise<Alert[]> {
     try {

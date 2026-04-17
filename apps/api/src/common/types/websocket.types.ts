@@ -20,7 +20,7 @@ export interface SensorDataMessage {
 }
 
 /**
- * 预警消息
+ * 异常消息
  */
 export interface AlertMessage {
   type: WebSocketMessageType.ALERT;

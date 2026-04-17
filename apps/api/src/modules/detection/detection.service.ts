@@ -240,11 +240,11 @@ export class DetectionService {
   }
 
   /**
-   * 判定预警等级
+   * 判定异常等级
    * 规则：异常指标数量>2 或 最大Z-Score>5 则为严重，否则为警告
    * 
    * @param anomalies 异常列表
-   * @returns 预警等级
+   * @returns 异常等级
    */
   private determineAlertLevel(anomalies: Anomaly[]): AlertLevel {
     if (anomalies.length === 0) {

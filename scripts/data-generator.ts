@@ -19,7 +19,7 @@ interface GeneratorConfig {
   deviceId: string;
   interval: number; // 发送间隔（毫秒）
   anomalyProbability: number; // 异常数据概率 (0-1)
-  anomalyType?: 'low-pressure' | 'high-temperature' | 'high-flow' | 'random';
+  anomalyType?: 'low-pressure' | 'high-temperature' | 'high-flow' | 'random' | 'multi';
 }
 
 // 正常数据范围
@@ -103,9 +103,39 @@ function generateNormalData(deviceId: string): SensorData {
  */
 function generateAnomalyData(
   deviceId: string,
-  anomalyType: 'low-pressure' | 'high-temperature' | 'high-flow' | 'random'
+  anomalyType: 'low-pressure' | 'high-temperature' | 'high-flow' | 'random' | 'multi'
 ): SensorData {
   const data = generateNormalData(deviceId);
+  
+  // 多指标异常模式：随机组合2-3个异常
+  if (anomalyType === 'multi') {
+    const anomalyTypes: Array<'low-pressure' | 'high-temperature' | 'high-flow'> = [
+      'low-pressure',
+      'high-temperature',
+      'high-flow',
+    ];
+    
+    // 随机选择2-3个异常类型
+    const numAnomalies = Math.random() > 0.5 ? 2 : 3;
+    const shuffled = anomalyTypes.sort(() => Math.random() - 0.5);
+    const selectedTypes = shuffled.slice(0, numAnomalies);
+    
+    // 应用所有选中的异常类型
+    selectedTypes.forEach(type => {
+      const config = ANOMALY_CONFIGS[type];
+      if (config.outletPressure) {
+        data.outletPressure = normalRandom(config.outletPressure.mean, config.outletPressure.std);
+      }
+      if (config.temperature) {
+        data.temperature = normalRandom(config.temperature.mean, config.temperature.std);
+      }
+      if (config.flowRate) {
+        data.flowRate = normalRandom(config.flowRate.mean, config.flowRate.std);
+      }
+    });
+    
+    return data;
+  }
   
   // 随机选择异常类型
   if (anomalyType === 'random') {
@@ -277,7 +307,7 @@ function parseArgs(): GeneratorConfig {
   -d, --device-id <id>             设备ID (默认: device-001)
   -i, --interval <ms>              发送间隔（毫秒） (默认: 1000)
   -p, --anomaly-probability <0-1>  异常数据概率 (默认: 0.1)
-  -t, --anomaly-type <type>        异常类型: low-pressure, high-temperature, high-flow, random
+  -t, --anomaly-type <type>        异常类型: low-pressure, high-temperature, high-flow, random, multi
   -h, --help                       显示帮助信息
 
 示例:
@@ -289,6 +319,9 @@ function parseArgs(): GeneratorConfig {
 
   # 指定异常类型
   bun run scripts/data-generator.ts -p 0.3 -t low-pressure
+
+  # 多指标异常模式（同时触发2-3个指标异常）
+  bun run scripts/data-generator.ts -p 0.5 -t multi
 
   # 多设备模拟（在不同终端运行）
   bun run scripts/data-generator.ts -d device-001

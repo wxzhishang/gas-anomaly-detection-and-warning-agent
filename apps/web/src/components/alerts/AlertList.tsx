@@ -10,7 +10,7 @@ interface AlertListProps {
   selectedDevice?: string | null;
 }
 
-// TODO: 当预警数量较大时（>100），考虑实现虚拟列表优化性能
+// TODO: 当异常数量较大时（>100），考虑实现虚拟列表优化性能
 export default function AlertList({ alerts, selectedDevice }: AlertListProps) {
   const [listHeight, setListHeight] = useState(400);
   const [selectedAlert, setSelectedAlert] = useState<Alert | null>(null);
@@ -38,7 +38,7 @@ export default function AlertList({ alerts, selectedDevice }: AlertListProps) {
     return () => window.removeEventListener('resize', updateHeight);
   }, []);
 
-  // 根据选中的设备过滤预警
+  // 根据选中的设备过滤异常
   const filteredAlerts = selectedDevice
     ? alerts.filter((alert) => alert.deviceId === selectedDevice)
     : alerts;
@@ -68,9 +68,9 @@ export default function AlertList({ alerts, selectedDevice }: AlertListProps) {
   return (
     <div className="bg-white rounded-lg shadow flex flex-col">
       <div className="px-3 sm:px-4 py-2 sm:py-3 border-b border-gray-200 flex-shrink-0">
-        <h2 className="text-base sm:text-lg font-semibold text-gray-900">预警列表</h2>
+        <h2 className="text-base sm:text-lg font-semibold text-gray-900">异常列表</h2>
         <p className="text-xs sm:text-sm text-gray-500 mt-1">
-          {selectedDevice ? `设备 ${selectedDevice} 的预警` : '全部预警'} · 共 {filteredAlerts.length} 条
+          {selectedDevice ? `设备 ${selectedDevice} 的异常` : '全部异常'} · 共 {filteredAlerts.length} 条
         </p>
       </div>
 
@@ -80,7 +80,7 @@ export default function AlertList({ alerts, selectedDevice }: AlertListProps) {
       >
         {filteredAlerts.length === 0 ? (
           <div className="px-3 sm:px-4 py-6 sm:py-8 text-center text-gray-500">
-            <p className="text-sm sm:text-base">暂无预警</p>
+            <p className="text-sm sm:text-base">暂无异常</p>
             <p className="text-xs sm:text-sm mt-2">
               {selectedDevice ? '该设备运行正常' : '系统运行正常'}
             </p>

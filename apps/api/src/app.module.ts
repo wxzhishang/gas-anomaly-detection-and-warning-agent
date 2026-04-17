@@ -32,7 +32,7 @@ import { HealthController } from './health.controller';
     DataModule,
     // 异常检测模块
     DetectionModule,
-    // 预警模块
+    // 异常模块
     AlertModule,
     // Agent工作流模块
     AgentModule,

@@ -66,7 +66,7 @@ export class DetectionScheduler {
               flowRate: row.flow_rate,
             };
 
-            // 通过Agent工作流执行完整的检测、分析、预警流程
+            // 通过Agent工作流执行完整的检测、分析、异常流程
             await this.agentService.executeDetectionWorkflow(deviceId, sensorData);
           }
         } catch (error: any) {

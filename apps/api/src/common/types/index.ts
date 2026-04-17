@@ -10,7 +10,7 @@ export * from './anomaly.types';
 // 根因分析类型
 export * from './analysis.types';
 
-// 预警类型
+// 异常类型
 export * from './alert.types';
 
 // Agent类型

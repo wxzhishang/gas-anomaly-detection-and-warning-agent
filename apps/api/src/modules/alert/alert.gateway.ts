@@ -119,10 +119,10 @@ export class AlertGateway
   }
 
   /**
-   * 广播预警到所有连接的客户端
+   * 广播异常到所有连接的客户端
    * 自动移除失效连接
    * 
-   * @param alert 预警记录
+   * @param alert 异常记录
    */
   broadcastAlert(alert: Alert): void {
     const message: AlertMessage = {
@@ -131,7 +131,7 @@ export class AlertGateway
     };
 
     this.logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
-    this.logger.log(`📢 广播预警到 WebSocket 客户端`);
+    this.logger.log(`📢 广播异常到 WebSocket 客户端`);
     this.logger.log(`   设备: ${alert.deviceId}`);
     this.logger.log(`   等级: ${alert.level}`);
     this.logger.log(`   消息: ${alert.message}`);
@@ -149,7 +149,7 @@ export class AlertGateway
           return;
         }
 
-        // 发送预警消息
+        // 发送异常消息
         client.emit('alert', message);
       } catch (error) {
         this.logger.error(
@@ -169,7 +169,7 @@ export class AlertGateway
       });
     }
 
-    this.logger.log(`✅ 预警广播完成`);
+    this.logger.log(`✅ 异常广播完成`);
     this.logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
 
     // 广播设备状态更新

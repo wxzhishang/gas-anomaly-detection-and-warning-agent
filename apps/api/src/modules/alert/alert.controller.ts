@@ -11,8 +11,8 @@ import { AlertService } from './alert.service';
 import { AlertLevel } from '../../common/types/anomaly.types';
 
 /**
- * 预警控制器
- * 提供预警查询的REST API端点
+ * 异常控制器
+ * 提供异常查询的REST API端点
  */
 @Controller('api/alerts')
 export class AlertController {
@@ -40,7 +40,7 @@ export class AlertController {
     @Query('offset') offset?: string,
   ) {
     try {
-      // 验证预警等级
+      // 验证异常等级
       if (level && !Object.values(AlertLevel).includes(level as AlertLevel)) {
         throw new BadRequestException(
           `Invalid alert level. Must be one of: ${Object.values(AlertLevel).join(', ')}`
@@ -77,7 +77,7 @@ export class AlertController {
         throw new BadRequestException('Invalid offset value. Must be >= 0.');
       }
 
-      // 查询预警
+      // 查询异常
       const alerts = await this.alertService.queryAlerts({
         level: level as AlertLevel,
         startTime: start,
@@ -106,15 +106,15 @@ export class AlertController {
 
   /**
    * GET /api/alerts/:deviceId
-   * 查询指定设备的预警历史
+   * 查询指定设备的异常历史
    * 
    * @param deviceId 设备ID
-   * @param level 预警等级（可选）
+   * @param level 异常等级（可选）
    * @param startTime 开始时间（ISO 8601格式，可选）
    * @param endTime 结束时间（ISO 8601格式，可选）
    * @param limit 返回数据条数限制（默认100）
    * @param offset 偏移量（默认0）
-   * @returns 预警列表
+   * @returns 异常列表
    */
   @Get(':deviceId')
   async getDeviceAlerts(
@@ -126,7 +126,7 @@ export class AlertController {
     @Query('offset') offset?: string,
   ) {
     try {
-      // 验证预警等级
+      // 验证异常等级
       if (level && !Object.values(AlertLevel).includes(level as AlertLevel)) {
         throw new BadRequestException(
           `Invalid alert level. Must be one of: ${Object.values(AlertLevel).join(', ')}`
@@ -163,7 +163,7 @@ export class AlertController {
         throw new BadRequestException('Invalid offset value. Must be >= 0.');
       }
 
-      // 查询预警
+      // 查询异常
       const alerts = await this.alertService.queryAlerts({
         deviceId,
         level: level as AlertLevel,

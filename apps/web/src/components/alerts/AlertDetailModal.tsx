@@ -74,7 +74,7 @@ export default function AlertDetailModal({ alert, isOpen, onClose }: AlertDetail
           {/* 头部 */}
           <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <h3 className="text-lg font-semibold text-gray-900">预警详情</h3>
+              <h3 className="text-lg font-semibold text-gray-900">异常详情</h3>
               <span
                 className={cn(
                   'inline-flex items-center px-2.5 py-0.5 rounded text-sm font-medium border',
@@ -101,7 +101,7 @@ export default function AlertDetailModal({ alert, isOpen, onClose }: AlertDetail
               <h4 className="text-sm font-semibold text-gray-700 mb-3">基本信息</h4>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs text-gray-500 mb-1">预警ID</p>
+                  <p className="text-xs text-gray-500 mb-1">异常ID</p>
                   <p className="text-sm font-medium text-gray-900">#{alert.id}</p>
                 </div>
                 <div>
@@ -118,15 +118,15 @@ export default function AlertDetailModal({ alert, isOpen, onClose }: AlertDetail
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500 mb-1">预警等级</p>
+                  <p className="text-xs text-gray-500 mb-1">异常等级</p>
                   <p className="text-sm font-medium text-gray-900">{getLevelText(alert.level)}</p>
                 </div>
               </div>
             </div>
 
-            {/* 预警消息 */}
+            {/* 异常消息 */}
             <div className="mb-6">
-              <h4 className="text-sm font-semibold text-gray-700 mb-2">预警消息</h4>
+              <h4 className="text-sm font-semibold text-gray-700 mb-2">异常消息</h4>
               <div className="bg-gray-50 rounded-lg p-4">
                 <div className="text-sm text-gray-900">
                   {formatText(alert.message)}
@@ -181,7 +181,7 @@ export default function AlertDetailModal({ alert, isOpen, onClose }: AlertDetail
                             'font-medium',
                             anomaly.deviation > 0 ? 'text-red-600' : 'text-blue-600'
                           )}>
-                            {anomaly.deviation > 0 ? '+' : ''}{anomaly.deviation.toFixed(2)} {getMetricUnit(anomaly.metric)}
+                            {anomaly.deviation > 0 ? '+' : ''}{anomaly.deviation.toFixed(2)}%
                           </p>
                         </div>
                       </div>

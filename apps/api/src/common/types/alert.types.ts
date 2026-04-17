@@ -3,7 +3,7 @@ import { Anomaly } from './anomaly.types';
 import { RootCauseResult } from './analysis.types';
 
 /**
- * 预警接口
+ * 异常接口
  */
 export interface Alert {
   id?: number;
@@ -16,7 +16,7 @@ export interface Alert {
 }
 
 /**
- * 预警创建DTO
+ * 异常创建DTO
  */
 export interface CreateAlertDto {
   deviceId: string;
@@ -27,7 +27,7 @@ export interface CreateAlertDto {
 }
 
 /**
- * 预警查询参数
+ * 异常查询参数
  */
 export interface AlertQueryParams {
   deviceId?: string;

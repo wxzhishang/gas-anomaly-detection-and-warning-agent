@@ -1,5 +1,5 @@
 /**
- * 预警等级枚举
+ * 异常等级枚举
  */
 export enum AlertLevel {
   WARNING = 'warning',      // 警告

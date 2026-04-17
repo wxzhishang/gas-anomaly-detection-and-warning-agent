@@ -13,8 +13,8 @@ const logger = new Logger('DetectionWorkflow');
  * 工作流节点:
  * 1. detect - 异常检测节点
  * 2. analyze - 根因分析节点
- * 3. alert - 预警生成节点
- * 4. push - 预警推送节点
+ * 3. alert - 异常生成节点
+ * 4. push - 异常推送节点
  * 
  * 工作流逻辑:
  * - 所有数据都经过异常检测

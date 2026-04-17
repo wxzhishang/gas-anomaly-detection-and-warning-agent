@@ -46,15 +46,15 @@ export default function Dashboard() {
         )
       );
     } else if (message.type === 'alert') {
-      console.log('[Dashboard] 📢 收到新预警，添加到列表:', message.data);
-      // 在列表头部插入新预警
+      console.log('[Dashboard] 📢 收到新异常，添加到列表:', message.data);
+      // 在列表头部插入新异常
       setAlerts((prev) => {
         const newAlerts = [message.data, ...prev];
-        console.log('[Dashboard] 更新后的预警列表长度:', newAlerts.length);
+        console.log('[Dashboard] 更新后的异常列表长度:', newAlerts.length);
         return newAlerts;
       });
       
-      // 根据预警等级更新设备状态
+      // 根据异常等级更新设备状态
       const alertData = message.data;
       setDevices((prev) =>
         prev.map((device) =>
@@ -99,7 +99,7 @@ export default function Dashboard() {
           setSelectedDevice(devicesData[0].id);
         }
 
-        // 加载预警历史
+        // 加载异常历史
         const alertsData = await apiClient.getAlerts({ limit: 50 });
         setAlerts(alertsData);
       } catch (err) {
@@ -249,7 +249,7 @@ export default function Dashboard() {
             />
           </div>
 
-          {/* 右侧：预警列表 */}
+          {/* 右侧：异常列表 */}
           <div className="md:col-span-2 lg:col-span-1 order-2 lg:order-3">
             <AlertList alerts={alerts} selectedDevice={selectedDevice} />
           </div>
